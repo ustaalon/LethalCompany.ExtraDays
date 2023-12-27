@@ -1,4 +1,5 @@
 ﻿using BepInEx;
+using BepInEx.Logging;
 using HarmonyLib;
 using Anubis.LC.ExtraDays.Commands;
 using Anubis.LC.ExtraDays.Models;
@@ -7,19 +8,21 @@ using Anubis.LC.ExtraDays.Patches;
 namespace Anubis.LC.ExtraDays
 {
 	[BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
-	public class TerminalCommandsPlugin : BaseUnityPlugin
+	public class ExtraDaysToDeadlinePlugin : BaseUnityPlugin
 	{
 		private Harmony HarmonyInstance = new Harmony(PluginInfo.PLUGIN_GUID);
 
 		private TerminalModRegistry Terminal;
 
-		private void Awake()
+		public static ManualLogSource LogSource = BepInEx.Logging.Logger.CreateLogSource(PluginInfo.PLUGIN_GUID);
+
+        private void Awake()
 		{
 			Logger.LogInfo($"{PluginInfo.PLUGIN_GUID} is loading...");
 
 			Logger.LogInfo($"Installing patches");
-            HarmonyInstance.PatchAll(typeof(TerminalCommandsPlugin).Assembly);
-            HarmonyInstance.PatchAll(typeof(QuotaPatch).Assembly);
+            HarmonyInstance.PatchAll(typeof(ExtraDaysToDeadlinePlugin).Assembly);
+            HarmonyInstance.PatchAll(typeof(TimeOfDayPatch).Assembly);
 
             Logger.LogInfo($"Registering built-in Commands");
 

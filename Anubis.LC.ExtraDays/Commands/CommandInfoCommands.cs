@@ -8,7 +8,7 @@ using Anubis.LC.ExtraDays.Models;
 namespace Anubis.LC.ExtraDays.Commands
 {
     /// <summary>
-    /// Contains Terminal Command definitions for the built-in help commands
+    /// Rewriting the "Other" menu and add to it "Buydays" menu item
     /// </summary>
     public class CommandInfoCommands
     {

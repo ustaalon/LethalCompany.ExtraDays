@@ -5,7 +5,7 @@ namespace Anubis.LC.ExtraDays.Patches
     ///
     /// </summary>
     [HarmonyPatch(typeof(TimeOfDay))]
-    internal static class QuotaPatch
+    internal static class TimeOfDayPatch
     {
         [HarmonyPatch("Awake")]
         [HarmonyPostfix]
