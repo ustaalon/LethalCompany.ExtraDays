@@ -53,6 +53,20 @@ namespace Anubis.LC.ExtraDays.Models
 		/// <returns>A <seealso cref="TerminalNode"/> response, or <see langword="null"/> if execution should fall-through to the game's command handler</returns>
 		public static TerminalNode HandleCommandInput(string command, Terminal terminal)
 		{
+			if (command.Length > 0 && !string.IsNullOrEmpty(terminal.currentNode.name) && terminal.currentNode.name.Equals("Buydays", StringComparison.InvariantCultureIgnoreCase))
+			{
+				if (command.Equals("deny", StringComparison.InvariantCultureIgnoreCase))
+				{
+					command = "deny_bea";
+				} else if(command.Equals("confirm", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    command = "confirm_bea";
+                } else
+				{
+					command = "Other";
+                }
+			}
+
 			// Split terminal input into parts
 			var matches = m_SplitRegex.Matches(command.Trim());
 			var commandParts = matches.Cast<Match>().Select(x => x.Value.Trim('"', ' ')).ToArray();

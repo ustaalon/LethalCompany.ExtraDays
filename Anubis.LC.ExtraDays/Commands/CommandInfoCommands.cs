@@ -4,6 +4,7 @@ using GameNetcodeStuff;
 using Anubis.LC.ExtraDays.Attributes;
 using Anubis.LC.ExtraDays.Interactions;
 using Anubis.LC.ExtraDays.Models;
+using System;
 
 namespace Anubis.LC.ExtraDays.Commands
 {
@@ -56,41 +57,57 @@ namespace Anubis.LC.ExtraDays.Commands
             return builder.ToString();
         }
 
+        [TerminalCommand("deny_bea", clearText: false)]
+        public string DenyBuyExtraDays()
+        {
+            ExtraDaysToDeadlinePlugin.LogSource.LogInfo("Player input DENY and deadline did not change");
+            var builder = new StringBuilder();
+            builder.AppendLine();
+            builder.AppendLine("Cancelled order.");
+            builder.AppendLine();
+            return builder.ToString();
+        }
+
+        [TerminalCommand("confirm_bea", clearText: false)]
+        public string ConfirmBuyExtraDays()
+        {
+            TimeOfDayStaticHelper.AddXDaysToDeadline(1);
+            ExtraDaysToDeadlinePlugin.LogSource.LogInfo("Player input CONFIRM and 1 day to deadline has been added");
+            var builder = new StringBuilder();
+            builder.AppendLine();
+            builder.AppendLine("Extra day has been added to your deadline. Don't waste it!");
+            builder.AppendLine();
+            return builder.ToString();
+        }
+
         [TerminalCommand("Buydays", clearText: true), CommandInfo("To ask the Company for an extra days to reach quota")]
         public ConfirmInteraction BuyDaysCommand(Terminal caller)
         {
-            var builder = new StringBuilder();
-
             var timeOfDay = TimeOfDayStaticHelper.TimeOfDay;
 
             float creditsFormula = 0.1f * timeOfDay.profitQuota;
 
+            var builder = new StringBuilder();
             builder.AppendLine();
             builder.AppendLine();
             builder.AppendLine(string.Format("You are about to ask the Company for an extra ONE day to reach quota. It will cost you {0} credits", creditsFormula));
-            builder.AppendLine();
 
-            var confirmOrDeny = new ConfirmInteraction(builder.ToString(), () =>
+            var terminalNode = new TerminalNode()
             {
-                var builder = new StringBuilder();
-                if (caller.groupCredits <= creditsFormula)
+                displayText = builder.ToString(),
+                clearPreviousText = true,
+                name = "Buydays"
+            };
+
+            var terminalInteraction = new ConfirmInteraction();
+            terminalInteraction
+                .WithPrompt(terminalNode)
+                .Confirm(() =>
                 {
-                    builder.AppendLine();
-                    builder.AppendLine();
-                    builder.AppendLine("You don't have enough credits to buy an extra day");
-                    builder.AppendLine();
-                    return builder.ToString();
-                }
-                caller.groupCredits = caller.groupCredits - (int)creditsFormula;
-
-                TimeOfDayStaticHelper.AddXDaysToDeadline(1);
-
-                builder.AppendLine("Added ONE extra day to reach deadline. Don't waste it!");
-                return builder.ToString();
-
-            }, () => { });
-
-            return confirmOrDeny;
+                }).Deny(() =>
+                {
+                });
+            return terminalInteraction;
         }
     }
 }

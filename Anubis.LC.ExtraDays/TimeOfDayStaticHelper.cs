@@ -12,6 +12,8 @@ namespace Anubis.LC.ExtraDays
         public static float lengthOfHours = 100f;
         public static int numberOfHours = 7;
 
+        public static bool IsInProcess = false;
+
         public static float GetTotalTime()
         {
             return lengthOfHours * (float)numberOfHours;
@@ -19,17 +21,20 @@ namespace Anubis.LC.ExtraDays
 
         public static void AddXDaysToDeadline(float days = 1f)
         {
+            if (IsInProcess) return;
             if (TimeOfDay == null)
             {
                 ExtraDaysToDeadlinePlugin.LogSource.LogError("TimeOfDay object is null!");
                 return;
             };
+            IsInProcess = true;
 
-            TimeOfDay.daysUntilDeadline += (int)days;
-            TimeOfDay.timeUntilDeadline += GetTotalTime() * days;
+            TimeOfDay.timeUntilDeadline += TimeOfDay.totalTime * days;
+            //TimeOfDay.totalTime += TimeOfDay.totalTime * days;
             TimeOfDay.UpdateProfitQuotaCurrentTime();
 
-            ExtraDaysToDeadlinePlugin.LogSource.LogInfo("Added an extra day");
+            ExtraDaysToDeadlinePlugin.LogSource.LogInfo("Added 1 day to deadline.");
+            IsInProcess = false;
         }
     }
 }
