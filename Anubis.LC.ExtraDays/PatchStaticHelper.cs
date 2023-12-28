@@ -43,12 +43,15 @@ namespace Anubis.LC.ExtraDays
         public static int GetExtraDaysPrice()
         {
             var profitQuota = TimeOfDay.profitQuota;
-            var baseIncrease = 0.5f * profitQuota;
-            var maxIncrease = 0.9f * profitQuota;
+            var baseIncrease = 0.15f * profitQuota;
+            var minIncrease = 0.5f * profitQuota;
+            var randommizer = (TimeOfDay.quotaVariables.randomizerCurve.Evaluate(UnityEngine.Random.Range(0f, 1f)) * TimeOfDay.quotaVariables.randomizerMultiplier + 1f);
 
-            float num2 = Mathf.Clamp(1f + (float)TimeOfDay.timesFulfilledQuota * ((float)TimeOfDay.timesFulfilledQuota / TimeOfDay.quotaVariables.increaseSteepness), 0f, maxIncrease);
-            num2 = baseIncrease * num2 * (TimeOfDay.quotaVariables.randomizerCurve.Evaluate(UnityEngine.Random.Range(0f, 1f)) * TimeOfDay.quotaVariables.randomizerMultiplier + 1f);
-            var price = (int)Mathf.Clamp((float)profitQuota + num2, profitQuota, 1E+09f);
+            var num2 = Mathf.Clamp(1f + (float)TimeOfDay.timesFulfilledQuota * ((float)TimeOfDay.timesFulfilledQuota / TimeOfDay.quotaVariables.increaseSteepness), 0f, 10000f);
+            var num3 = baseIncrease * randommizer;
+
+            var price = (int)Mathf.Clamp((float)num3, minIncrease, 1E+09f);
+
             return price;
         }
 
