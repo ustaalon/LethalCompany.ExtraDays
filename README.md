@@ -20,3 +20,6 @@ These changes are as such:
 
 ## Additional Credits
 Thanks to Lethal [Company Community on Github](https://github.com/LethalCompany) for making this template
+
+## Notes
+This is my first mod. I had some free time during the holidays and decided to give it a try.
