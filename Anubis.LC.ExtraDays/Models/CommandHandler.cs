@@ -58,13 +58,15 @@ namespace Anubis.LC.ExtraDays.Models
 				if (command.Equals("deny", StringComparison.InvariantCultureIgnoreCase))
 				{
 					command = "deny_bea";
-				} else if(command.Equals("confirm", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    command = "confirm_bea";
-                } else
+				}
+				else if (command.Equals("confirm", StringComparison.InvariantCultureIgnoreCase))
+				{
+					command = "confirm_bea";
+				}
+				else
 				{
 					command = "Other";
-                }
+				}
 			}
 
 			// Split terminal input into parts

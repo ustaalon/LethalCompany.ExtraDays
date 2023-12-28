@@ -5,6 +5,7 @@ using Anubis.LC.ExtraDays.Attributes;
 using Anubis.LC.ExtraDays.Interactions;
 using Anubis.LC.ExtraDays.Models;
 using System;
+using Anubis.LC.ExtraDays.Interfaces;
 
 namespace Anubis.LC.ExtraDays.Commands
 {
@@ -71,9 +72,19 @@ namespace Anubis.LC.ExtraDays.Commands
         [TerminalCommand("confirm_bea", clearText: false)]
         public string ConfirmBuyExtraDays()
         {
-            TimeOfDayStaticHelper.AddXDaysToDeadline(1);
-            ExtraDaysToDeadlinePlugin.LogSource.LogInfo("Player input CONFIRM and 1 day to deadline has been added");
             var builder = new StringBuilder();
+            if (!PatchStaticHelper.IsExtraDaysPurchasable())
+            {
+                ExtraDaysToDeadlinePlugin.LogSource.LogInfo("The player have insufficient credits to purchase an extra day");
+                builder.AppendLine();
+                builder.AppendLine("YOU do not have enough credits to buy an extra day.");
+                builder.AppendLine();
+                builder.AppendLine("Cancelled order.");
+                builder.AppendLine();
+                return builder.ToString();
+            }
+
+            PatchStaticHelper.SetDaysToDeadline();
             builder.AppendLine();
             builder.AppendLine("Extra day has been added to your deadline. Don't waste it!");
             builder.AppendLine();
@@ -81,16 +92,12 @@ namespace Anubis.LC.ExtraDays.Commands
         }
 
         [TerminalCommand("Buydays", clearText: true), CommandInfo("To ask the Company for an extra days to reach quota")]
-        public ConfirmInteraction BuyDaysCommand(Terminal caller)
+        public ITerminalInteraction BuyDaysCommand()
         {
-            var timeOfDay = TimeOfDayStaticHelper.TimeOfDay;
-
-            float creditsFormula = 0.1f * timeOfDay.profitQuota;
-
             var builder = new StringBuilder();
             builder.AppendLine();
             builder.AppendLine();
-            builder.AppendLine(string.Format("You are about to ask the Company for an extra ONE day to reach quota. It will cost you {0} credits", creditsFormula));
+            builder.AppendLine(string.Format("You are about to ask the Company for an extra ONE day to reach quota. It will cost you {0} credits", PatchStaticHelper.GetExtraDaysPrice()));
 
             var terminalNode = new TerminalNode()
             {
@@ -99,14 +106,9 @@ namespace Anubis.LC.ExtraDays.Commands
                 name = "Buydays"
             };
 
-            var terminalInteraction = new ConfirmInteraction();
-            terminalInteraction
-                .WithPrompt(terminalNode)
-                .Confirm(() =>
-                {
-                }).Deny(() =>
-                {
-                });
+            ExtraDaysToDeadlinePlugin.IsInProcess = false;
+            var terminalInteraction = new ConfirmInteraction(terminalNode, () => { }, () => { });
+
             return terminalInteraction;
         }
     }

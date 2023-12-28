@@ -16,6 +16,8 @@ namespace Anubis.LC.ExtraDays
 
 		public static ManualLogSource LogSource = BepInEx.Logging.Logger.CreateLogSource(PluginInfo.PLUGIN_GUID);
 
+        public static bool IsInProcess = false;
+
         private void Awake()
 		{
 			Logger.LogInfo($"{PluginInfo.PLUGIN_GUID} is loading...");

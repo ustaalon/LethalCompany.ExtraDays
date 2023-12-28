@@ -4,14 +4,14 @@ namespace Anubis.LC.ExtraDays.Patches
     /// <summary>
     ///
     /// </summary>
-    [HarmonyPatch(typeof(TimeOfDay))]
-    internal static class TimeOfDayPatch
+    [HarmonyPatch(typeof(Terminal))]
+    internal static class TerminalPatch
     {
         [HarmonyPatch("Awake")]
         [HarmonyPostfix]
-        private static void NewInstance(TimeOfDay __instance)
+        private static void NewInstance(Terminal __instance)
         {
-            PatchStaticHelper.TimeOfDay = __instance;
+            PatchStaticHelper.Terminal = __instance;
         }
     }
 }
