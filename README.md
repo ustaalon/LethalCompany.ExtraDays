@@ -10,7 +10,7 @@ Allows the player to purchase an extra day via the terminal. This mod's uniquene
 All players need to have the mod installed to play.
 
 ## Bugs & Issues
-Please let me know of any bugs or issues happening to you regarding using my mod, by sending me an email: bowbeforeanubis@gmail.com or open an issue in the GitHub repo
+Please let me know of any bugs or issues happening to you regarding using my mod, by sending me an email: bowbeforeanubis@gmail.com or open an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues) in the GitHub repo
 
 # Release Notes
 ### 2.0.0
