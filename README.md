@@ -2,15 +2,15 @@
 Allows the player to purchase an extra day via the terminal. This mod's uniqueness is that it tries to be more realistic with the game, as it is not trying to modify the main logic of the deadline. It tries to add functionality that will give you extends for the deadline but with some price on it.
 
 ## How To Use?
-1. Enter terminal
-2. Go to 'Other' menu item
-3. Go to 'Buydays' menu item
+1. Enter the Ship's Terminal
+2. Go to the `Other` category
+3. Execute the `buyday` menu item
 4. CONFIRM / DENY purchase of an extra day
 
 All players need to have the mod installed to play.
 
 ## Bugs & Issues
-Please let me know of any bugs or issues happening to you regarding using my mod, by sending me an email: bowbeforeanubis@gmail.com or open an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues) in the GitHub repo
+Please let me know about any bugs or issues with my mod by opening an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues) or by sending me an email at bowbeforeanubis@gmail.com
 
 # Release Notes
 ### 2.0.0
@@ -29,8 +29,9 @@ Please let me know of any bugs or issues happening to you regarding using my mod
 
 # Additional Credits
 Thanks to [Lethal Company Community on Github](https://github.com/LethalCompany) for making modding easy for Lethal Company.
-My mod using [LethalAPI.TerminalCommands](https://github.com/LethalCompany/LethalAPI.TerminalCommands) to add the new "Buydays" command, but the mod is not yet officialy released to Thunderstore.
-So by using that mod, those changes are apply as well::
+Thanks, also, to [LethalAPI.TerminalCommands](https://github.com/LethalCompany/LethalAPI.TerminalCommands) for adding the ability to make new commands.
+
+By using that mod, these changes are apply as well:
 * Reduces the delay after entering the terminal before you can type by 80%
   *  You ever open the terminal and start typing, even hearing the keyboard sound, but it doesn't write anything? This fixes that.
 
