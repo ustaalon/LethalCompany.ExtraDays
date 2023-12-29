@@ -18,7 +18,7 @@ namespace Anubis.LC.ExtraDays.Commands
         [TerminalCommand("deny", clearText: false)]
         public string DenyBuyExtraDays()
         {
-            ExtraDaysToDeadlinePlugin.LogSource.LogInfo("Player denied so the deadline didn't change!");
+            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Player denied so the deadline didn't change!");
             var builder = new StringBuilder();
             builder.AppendLine();
             builder.AppendLine("Cancelled order.");
@@ -31,9 +31,9 @@ namespace Anubis.LC.ExtraDays.Commands
         public string ConfirmBuyExtraDays(Terminal terminal)
         {
             var builder = new StringBuilder();
-            if (!terminal.IsExtraDaysPurchasable(TimeOfDay.Instance))
+            if (!terminal.IsExtraDaysPurchasable())
             {
-                ExtraDaysToDeadlinePlugin.LogSource.LogInfo("Player has insufficient credits to purchase an extra day");
+                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Player has insufficient credits to purchase an extra day");
                 builder.AppendLine();
                 builder.AppendLine("You don't have enough credits to buy an extra day.");
                 builder.AppendLine();
@@ -42,7 +42,7 @@ namespace Anubis.LC.ExtraDays.Commands
                 return builder.ToString();
             }
 
-            terminal.SetDaysToDeadline(TimeOfDay.Instance);
+            terminal.SetDaysToDeadline();
             builder.AppendLine();
             builder.AppendLine("An extra day has been added to your deadline. Don't waste it!");
             builder.AppendLine();
@@ -64,10 +64,7 @@ namespace Anubis.LC.ExtraDays.Commands
                 name = "buyday"
             };
 
-            //ExtraDaysToDeadlinePlugin.IsInProcess = false;
-            var terminalInteraction = new ConfirmInteraction(terminalNode, ConfirmBuyExtraDays, DenyBuyExtraDays);
-
-            return terminalInteraction;
+            return new ConfirmInteraction(terminalNode, ConfirmBuyExtraDays, DenyBuyExtraDays);
         }
     }
 }
