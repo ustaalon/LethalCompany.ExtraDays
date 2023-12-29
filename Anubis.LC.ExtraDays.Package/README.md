@@ -12,21 +12,6 @@ All players need to have the mod installed to play.
 ## Bugs & Issues
 Please let me know about any bugs or issues with my mod by opening an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues) or by sending me an email at bowbeforeanubis@gmail.com
 
-# Release Notes
-### 2.0.0
-- Refactoring all code base and adjusting dependencies
-
-### 1.0.2
-- Fixing [issue #2](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/2) when you could buy an extra day but you got the wrong terminal response message
-- Fixing [issue #3](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/3) when you could still see your extra day after finishing cycle (going to company) or after death
-
-### 1.0.1
-- More information about the mod
-- Adjusting price logic to be more reachable (not too expensive or way too low)
-
-### 1.0.0
-- Basic logic and terminal improvements
-
 # Additional Credits
 Thanks to [Lethal Company Community on Github](https://github.com/LethalCompany) for making modding easy for Lethal Company.
 Thanks, also, to [LethalAPI.TerminalCommands](https://github.com/LethalCompany/LethalAPI.TerminalCommands) for adding the ability to make new commands.
