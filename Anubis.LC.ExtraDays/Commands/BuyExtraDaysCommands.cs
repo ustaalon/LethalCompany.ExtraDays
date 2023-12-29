@@ -18,7 +18,7 @@ namespace Anubis.LC.ExtraDays.Commands
         [TerminalCommand("deny", clearText: false)]
         public string DenyBuyExtraDays()
         {
-            ExtraDaysToDeadlinePlugin.LogSource.LogInfo("Player input DENY and deadline did not change");
+            ExtraDaysToDeadlinePlugin.LogSource.LogInfo("Player denied so the deadline didn't change!");
             var builder = new StringBuilder();
             builder.AppendLine();
             builder.AppendLine("Cancelled order.");
@@ -33,9 +33,9 @@ namespace Anubis.LC.ExtraDays.Commands
             var builder = new StringBuilder();
             if (!terminal.IsExtraDaysPurchasable(TimeOfDay.Instance))
             {
-                ExtraDaysToDeadlinePlugin.LogSource.LogInfo("The player have insufficient credits to purchase an extra day");
+                ExtraDaysToDeadlinePlugin.LogSource.LogInfo("Player has insufficient credits to purchase an extra day");
                 builder.AppendLine();
-                builder.AppendLine("YOU do not have enough credits to buy an extra day.");
+                builder.AppendLine("You don't have enough credits to buy an extra day.");
                 builder.AppendLine();
                 builder.AppendLine("Cancelled order.");
                 builder.AppendLine();
@@ -44,24 +44,24 @@ namespace Anubis.LC.ExtraDays.Commands
 
             terminal.SetDaysToDeadline(TimeOfDay.Instance);
             builder.AppendLine();
-            builder.AppendLine("Extra day has been added to your deadline. Don't waste it!");
+            builder.AppendLine("An extra day has been added to your deadline. Don't waste it!");
             builder.AppendLine();
             return builder.ToString();
         }
 
-        [TerminalCommand("Buydays", clearText: true), CommandInfo("To ask the Company for an extra days to reach quota")]
+        [TerminalCommand("buyday", clearText: true), CommandInfo("Ask the Company for an extra day to reach the quota")]
         public ITerminalInteraction BuyDaysCommand()
         {
             var builder = new StringBuilder();
             builder.AppendLine();
             builder.AppendLine();
-            builder.AppendLine(string.Format("You are about to ask the Company for an extra ONE day to reach quota. It will cost you {0} credits", TimeOfDay.Instance.GetExtraDaysPrice()));
+            builder.AppendLine(string.Format("You're about to ask the Company for ONE extra day to reach the profit quota. It will cost you {0} credits.", TimeOfDay.Instance.GetExtraDaysPrice()));
 
             var terminalNode = new TerminalNode()
             {
                 displayText = builder.ToString(),
                 clearPreviousText = true,
-                name = "Buydays"
+                name = "buyday"
             };
 
             //ExtraDaysToDeadlinePlugin.IsInProcess = false;
