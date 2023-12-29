@@ -12,7 +12,7 @@ Please let me know of any bugs or issues happening to you regarding using my mod
 
 # Release Notes
 ## 2.0.0
-- Refactoring all code base and adjusting dependecies
+- Refactoring all code base and adjusting dependencies
 
 ## 1.0.2
 - Fixing [issue #2](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/2) when you could buy an extra day but you got the wrong terminal response message
