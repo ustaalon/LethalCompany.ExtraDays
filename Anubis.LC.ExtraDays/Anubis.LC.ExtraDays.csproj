@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>ExtraDaysToDeadline</AssemblyName>
     <Description>Adding new menu item to allow you purchase an extra days</Description>
-    <Version>1.0.0</Version>
+    <Version>1.0.2</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <Authors>Anubis</Authors>
