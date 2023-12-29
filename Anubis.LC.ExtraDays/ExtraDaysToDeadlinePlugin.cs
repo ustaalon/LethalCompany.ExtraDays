@@ -24,7 +24,6 @@ namespace Anubis.LC.ExtraDays
 
 			Logger.LogInfo($"Installing patches");
             HarmonyInstance.PatchAll(typeof(ExtraDaysToDeadlinePlugin).Assembly);
-            HarmonyInstance.PatchAll(typeof(TimeOfDayPatch).Assembly);
 
             Logger.LogInfo($"Registering built-in Commands");
 
