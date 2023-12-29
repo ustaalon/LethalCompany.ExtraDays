@@ -1,9 +1,8 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
+using LethalAPI.TerminalCommands.Models;
 using Anubis.LC.ExtraDays.Commands;
-using Anubis.LC.ExtraDays.Models;
-using Anubis.LC.ExtraDays.Patches;
 
 namespace Anubis.LC.ExtraDays
 {
@@ -15,8 +14,6 @@ namespace Anubis.LC.ExtraDays
 		private TerminalModRegistry Terminal;
 
 		public static ManualLogSource LogSource = BepInEx.Logging.Logger.CreateLogSource(PluginInfo.PLUGIN_GUID);
-
-        public static bool IsInProcess = false;
 
         private void Awake()
 		{
@@ -31,7 +28,7 @@ namespace Anubis.LC.ExtraDays
 			Terminal = TerminalRegistry.CreateTerminalRegistry();
 
 			// Register commands, don't care about the instance
-			Terminal.RegisterFrom<CommandInfoCommands>();
+			Terminal.RegisterFrom<BuyExtraDaysCommands>();
 
 			DontDestroyOnLoad(this);
 

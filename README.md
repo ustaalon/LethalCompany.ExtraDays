@@ -11,6 +11,9 @@ Allows the player to purchase an extra day via the terminal. This mod's uniquene
 Please let me know of any bugs or issues happening to you regarding using my mod, by sending me an email: bowbeforeanubis@gmail.com or open an issue in the GitHub repo
 
 # Release Notes
+## 2.0.0
+- Refactoring all code base and adjusting dependecies
+
 ## 1.0.2
 - Fixing [issue #2](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/2) when you could buy an extra day but you got the wrong terminal response message
 - Fixing [issue #3](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/3) when you could still see your extra day after finishing cycle (going to company) or after death

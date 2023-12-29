@@ -3,14 +3,29 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>ExtraDaysToDeadline</AssemblyName>
-    <Description>Adding new menu item to allow you purchase an extra days</Description>
-    <Version>1.0.2</Version>
+    <Description>Allows the player to purchase an extra day via the terminal. This mod's uniqueness is that It tries to add functionality that will give you the option to extend the deadline but with some price on it.</Description>
+    <Version>2.0.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <Authors>Anubis</Authors>
     <Company />
     <PackageTags>LethalCompany LethalCompanyMods</PackageTags>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Attributes\**" />
+    <Compile Remove="Interactions\**" />
+    <Compile Remove="Interfaces\**" />
+    <Compile Remove="Models\**" />
+    <EmbeddedResource Remove="Attributes\**" />
+    <EmbeddedResource Remove="Interactions\**" />
+    <EmbeddedResource Remove="Interfaces\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="Attributes\**" />
+    <None Remove="Interactions\**" />
+    <None Remove="Interfaces\**" />
+    <None Remove="Models\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
@@ -28,6 +43,9 @@
       <HintPath>D:\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="LethalAPI.TerminalCommands">
+      <HintPath>..\..\lib\LethalAPI.TerminalCommands.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Netcode.Runtime">
       <HintPath>D:\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.Netcode.Runtime.dll</HintPath>
       <Private>False</Private>
@@ -40,5 +58,9 @@
       <HintPath>D:\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.UI.dll</HintPath>
       <Private>False</Private>
     </Reference>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 </Project>
