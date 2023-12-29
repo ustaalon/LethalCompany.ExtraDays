@@ -46,31 +46,29 @@ namespace Anubis.LC.ExtraDays
             var baseIncrease = 0.15f * profitQuota;
             var minIncrease = 0.5f * profitQuota;
             var randommizer = (TimeOfDay.quotaVariables.randomizerCurve.Evaluate(UnityEngine.Random.Range(0f, 1f)) * TimeOfDay.quotaVariables.randomizerMultiplier + 1f);
+            var priceXRandom = baseIncrease * randommizer;
 
-            var num2 = Mathf.Clamp(1f + (float)TimeOfDay.timesFulfilledQuota * ((float)TimeOfDay.timesFulfilledQuota / TimeOfDay.quotaVariables.increaseSteepness), 0f, 10000f);
-            var num3 = baseIncrease * randommizer;
-
-            var price = (int)Mathf.Clamp((float)num3, minIncrease, 1E+09f);
+            var price = (int)Mathf.Clamp((float)priceXRandom, minIncrease, 1E+09f);
 
             return price;
         }
 
         public static bool IsExtraDaysPurchasable()
         {
+            if (ExtraDaysToDeadlinePlugin.IsInProcess) return true;
             return Terminal.groupCredits >= GetExtraDaysPrice();
         }
 
         public static void SetDaysToDeadline()
         {
-            if (!ExtraDaysToDeadlinePlugin.IsInProcess)
-            {
-                ExtraDaysToDeadlinePlugin.IsInProcess = true;
-                ExtraDaysToDeadlinePlugin.LogSource.LogInfo("Player input CONFIRM and 1 day to deadline has been added");
-                AddXDaysToDeadline(1);
-                float creditsFormula = GetExtraDaysPrice();
-                var newCredits = Terminal.groupCredits -= (int)creditsFormula;
-                SetNewCredits(newCredits);
-            }
+            if (ExtraDaysToDeadlinePlugin.IsInProcess) return;
+
+            ExtraDaysToDeadlinePlugin.IsInProcess = true;
+            ExtraDaysToDeadlinePlugin.LogSource.LogInfo("Player input CONFIRM and 1 day to deadline has been added");
+            AddXDaysToDeadline(1);
+            float creditsFormula = GetExtraDaysPrice();
+            var newCredits = Terminal.groupCredits -= (int)creditsFormula;
+            SetNewCredits(newCredits);
         }
     }
 }
