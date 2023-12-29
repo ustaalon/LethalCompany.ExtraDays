@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BepInEx;
+using BepInEx.Bootstrap;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -10,10 +12,17 @@ namespace Anubis.LC.ExtraDays
         public static void AddXDaysToDeadline(this TimeOfDay timeOfDay, float days = 1f)
         {
             timeOfDay.timeUntilDeadline += timeOfDay.totalTime * days;
-            timeOfDay.quotaVariables.deadlineDaysAmount += (int)days;
-            timeOfDay.UpdateProfitQuotaCurrentTime();
+            timeOfDay.quotaVariables.deadlineDaysAmount = timeOfDay.CalculateDeadlineDaysAmount(); // To calculate buying rate for the company
+            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"DeadlineDaysAmount: {timeOfDay.CalculateDeadlineDaysAmount()}");
+            timeOfDay.SyncTimeAndDeadline();
 
-            ExtraDaysToDeadlinePlugin.LogSource.LogInfo("Added 1 day to deadline.");
+            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Added 1 day to deadline.");
+        }
+
+        public static int CalculateDeadlineDaysAmount(this TimeOfDay timeOfDay)
+        {
+            int days = (int)Mathf.Floor(timeOfDay.timeUntilDeadline / timeOfDay.totalTime);
+            return (int)days;
         }
 
         public static int GetExtraDaysPrice(this TimeOfDay timeOfDay)
@@ -28,11 +37,30 @@ namespace Anubis.LC.ExtraDays
             return price;
         }
 
-        public static void ResetDeadline(this TimeOfDay timeOfDay)
+        public static void ResetDeadline(this TimeOfDay timeOfDay, bool isShipReset = false)
         {
-            timeOfDay.timeUntilDeadline = timeOfDay.totalTime * 3f;
-            timeOfDay.quotaVariables.deadlineDaysAmount = 4;
+            if (isShipReset || !ExtraDaysToDeadlineStaticHelper.IsDynamicDeadlinesModInstalled())
+            {
+                timeOfDay.timeUntilDeadline = timeOfDay.totalTime * 3f;
+
+                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Deadline reset to defaults");
+            }
+
+            timeOfDay.quotaVariables.deadlineDaysAmount = timeOfDay.CalculateDeadlineDaysAmount();
+
+            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Buying rate recalculated");
+
+            timeOfDay.SyncTimeAndDeadline();
+        }
+
+        public static void SyncTimeAndDeadline(this TimeOfDay timeOfDay)
+        {
             timeOfDay.UpdateProfitQuotaCurrentTime();
+            timeOfDay.SyncTimeClientRpc(timeOfDay.globalTime, (int)timeOfDay.timeUntilDeadline);
+            timeOfDay.SetBuyingRateForDay();
+            StartOfRound.Instance.SyncCompanyBuyingRateClientRpc(StartOfRound.Instance.companyBuyingRate);
+
+            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Deadline & Buying rate SYNC");
         }
     }
 }

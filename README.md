@@ -1,5 +1,5 @@
 # Extra Days
-Allows the player to purchase an extra day via the terminal. This mod's uniqueness is that it tries to be more realistic with the game, as it is not trying to modify the main logic of the deadline. It tries to add functionality that will give you extends for the deadline but with some price on it.
+Allows the player to purchase an extra day via the terminal. This mod's uniqueness is that it tries to be more realistic with the game, as it is not trying to modify the main logic of the deadline. It tries to add functionality that will give you extends for the deadline but with some price on it. **You can install it in additon to Dynamic Deadline mod!**
 
 ## How To Use?
 1. Enter the Ship's Terminal
@@ -13,6 +13,9 @@ All players need to have the mod installed to play.
 Please let me know about any bugs or issues with my mod by opening an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues) or by sending me an email at bowbeforeanubis@gmail.com
 
 # Release Notes
+### 2.0.1
+- Making the mod working with [DynamicDeadline](https://thunderstore.io/c/lethal-company/p/Krayken/DynamicDeadline/) so you can have dynamic deadlines but if needed - you can purchase more days
+
 ### 2.0.0
 - Refactoring all code base and adjusting dependencies
 

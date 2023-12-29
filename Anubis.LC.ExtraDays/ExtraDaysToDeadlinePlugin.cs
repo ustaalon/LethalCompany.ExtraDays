@@ -13,8 +13,6 @@ namespace Anubis.LC.ExtraDays
 
 		private TerminalModRegistry Terminal;
 
-		public static ManualLogSource LogSource = BepInEx.Logging.Logger.CreateLogSource(PluginInfo.PLUGIN_GUID);
-
         private void Awake()
 		{
 			Logger.LogInfo($"{PluginInfo.PLUGIN_GUID} is loading...");

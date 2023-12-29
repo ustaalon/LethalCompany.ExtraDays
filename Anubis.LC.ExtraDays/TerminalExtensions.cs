@@ -12,17 +12,17 @@ namespace Anubis.LC.ExtraDays
             terminal.groupCredits = credits;
         }
 
-        public static bool IsExtraDaysPurchasable(this Terminal terminal, TimeOfDay timeOfDay)
+        public static bool IsExtraDaysPurchasable(this Terminal terminal)
         {
-            return terminal.groupCredits >= timeOfDay.GetExtraDaysPrice();
+            return terminal.groupCredits >= TimeOfDay.Instance.GetExtraDaysPrice();
         }
 
-        public static void SetDaysToDeadline(this Terminal terminal, TimeOfDay timeOfDay)
+        public static void SetDaysToDeadline(this Terminal terminal)
         {
-            ExtraDaysToDeadlinePlugin.LogSource.LogInfo("Player input CONFIRM and 1 day to deadline has been added");
-            timeOfDay.AddXDaysToDeadline(1);
+            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Player input CONFIRM and 1 day to deadline has been added");
+            TimeOfDay.Instance.AddXDaysToDeadline(ExtraDaysToDeadlineStaticHelper.DAYS_TO_INCREASE);
 
-            float creditsFormula = timeOfDay.GetExtraDaysPrice();
+            float creditsFormula = TimeOfDay.Instance.GetExtraDaysPrice();
             int newCredits = terminal.groupCredits -= (int)creditsFormula;
 
             terminal.SetNewCredits(newCredits);
