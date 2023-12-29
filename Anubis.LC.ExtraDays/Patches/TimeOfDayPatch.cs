@@ -13,5 +13,14 @@ namespace Anubis.LC.ExtraDays.Patches
         {
             PatchStaticHelper.TimeOfDay = __instance;
         }
+
+        [HarmonyPatch("SetNewProfitQuota")]
+        [HarmonyPostfix]
+        private static void SetNewProfitQuota(TimeOfDay __instance)
+        {
+            __instance.timeUntilDeadline = __instance.totalTime * 3f;
+            __instance.quotaVariables.deadlineDaysAmount = 4;
+            __instance.UpdateProfitQuotaCurrentTime();
+        }
     }
 }
