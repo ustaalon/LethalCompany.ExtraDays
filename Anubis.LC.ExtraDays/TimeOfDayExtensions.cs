@@ -27,5 +27,12 @@ namespace Anubis.LC.ExtraDays
             int price = (int)Mathf.Clamp(priceXRandom, minIncrease, 1E+09f);
             return price;
         }
+
+        public static void ResetDeadline(this TimeOfDay timeOfDay)
+        {
+            timeOfDay.timeUntilDeadline = timeOfDay.totalTime * 3f;
+            timeOfDay.quotaVariables.deadlineDaysAmount = 4;
+            timeOfDay.UpdateProfitQuotaCurrentTime();
+        }
     }
 }
