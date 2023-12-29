@@ -1,3 +1,6 @@
+### 2.0.1
+- Making the mod working with [DynamicDeadline](https://thunderstore.io/c/lethal-company/p/Krayken/DynamicDeadline/) so you can have dynamic deadlines but if needed - you can purchase more days
+
 ### 2.0.0
 - Refactoring all code base and adjusting dependencies
 
