@@ -20,7 +20,7 @@ namespace Anubis.LC.ExtraDays
         public static void SetDaysToDeadline(this Terminal terminal)
         {
             ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Player input CONFIRM and 1 day to deadline has been added");
-            TimeOfDay.Instance.AddXDaysToDeadline(5);
+            TimeOfDay.Instance.AddXDaysToDeadline(ExtraDaysToDeadlineStaticHelper.DAYS_TO_INCREASE);
 
             float creditsFormula = TimeOfDay.Instance.GetExtraDaysPrice();
             int newCredits = terminal.groupCredits -= (int)creditsFormula;
