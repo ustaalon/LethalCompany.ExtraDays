@@ -10,7 +10,7 @@ namespace Anubis.LC.ExtraDays.Patches
     public class ResetSavedValuesPatch
     {
         [HarmonyPatch("ResetSavedGameValues")]
-        [HarmonyPrefix]
+        [HarmonyPostfix]
         public static void ResetSavedValues()
         {
             SaveHelper.ResetSettings();

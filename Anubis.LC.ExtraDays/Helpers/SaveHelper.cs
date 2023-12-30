@@ -14,21 +14,63 @@ namespace Anubis.LC.ExtraDays.Helpers
 
         public static void WriteSettings(Settings data)
         {
-            string jsonString = JsonConvert.SerializeObject(data, Formatting.Indented);
+            try
+            {
+                string jsonString = JsonConvert.SerializeObject(data, Formatting.Indented);
 
-            File.WriteAllText(filePath, jsonString);
+                File.WriteAllText(filePath, jsonString);
+                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Settings file created/updated");
+            }
+            catch
+            {
+                ExtraDaysToDeadlineStaticHelper.Logger.LogError("Could not update settings file for currrent game");
+            }
         }
 
         public static Settings ReadSettings()
         {
-            string jsonString = File.ReadAllText(filePath);
+            try
+            {
+                string jsonString = File.ReadAllText(filePath);
 
-            Settings data = JsonConvert.DeserializeObject<Settings>(jsonString);
+                Settings data = JsonConvert.DeserializeObject<Settings>(jsonString);
 
-            return data;
+                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Settings file loaded");
+                return data;
+            }
+            catch
+            {
+                ExtraDaysToDeadlineStaticHelper.Logger.LogError("Could not read settings file. Using defaults");
+                return new Settings()
+                {
+                    DeadlineDaysAmount = ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS
+                };
+            }
         }
 
-        public static bool IsSaveFileExists() { return File.Exists(filePath); }
+        public static bool IsSaveFileExists()
+        {
+            return File.Exists(filePath);
+        }
+
+        public static void DeleteSettings()
+        {
+            if (!IsSaveFileExists())
+            {
+                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Settings file does not exists. Nothing to delete");
+                return;
+            }
+
+            try
+            {
+                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Settings file has been deleted");
+                File.Delete(filePath);
+            }
+            catch
+            {
+                ExtraDaysToDeadlineStaticHelper.Logger.LogError("Could not delete settings file");
+            }
+        }
 
         public static void ResetSettings()
         {

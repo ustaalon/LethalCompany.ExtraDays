@@ -1,5 +1,4 @@
 ﻿using HarmonyLib;
-using Unity.Netcode;
 namespace Anubis.LC.ExtraDays.Patches
 {
     /// <summary>
