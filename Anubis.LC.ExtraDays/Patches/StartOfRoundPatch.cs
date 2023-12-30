@@ -9,7 +9,7 @@ namespace Anubis.LC.ExtraDays.Patches
     {
         [HarmonyPatch("ResetShip")]
         [HarmonyPostfix]
-        private static void Postfix_ResetShip(StartOfRound __instance)
+        public static void Postfix_ResetShip(StartOfRound __instance)
         {
             TimeOfDay.Instance.ResetDeadline(true);
         }

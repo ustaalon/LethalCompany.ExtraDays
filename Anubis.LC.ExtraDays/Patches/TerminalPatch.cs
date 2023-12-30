@@ -10,7 +10,7 @@ internal static class TerminalPatch
 {
     [HarmonyPatch("BeginUsingTerminal")]
     [HarmonyPostfix]
-    private static void BeginUsingTerminal(Terminal __instance)
+    public static void BeginUsingTerminal(Terminal __instance)
     {
         if (StartOfRound.Instance.companyBuyingRate <= 0f)
         {
@@ -21,7 +21,7 @@ internal static class TerminalPatch
 
     [HarmonyPatch("QuitTerminal")]
     [HarmonyPostfix]
-    private static void QuitTerminal(Terminal __instance)
+    public static void QuitTerminal(Terminal __instance)
     {
         CommandHandler.HandleCommandInput("help", __instance);
     }
