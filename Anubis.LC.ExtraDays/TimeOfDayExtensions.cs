@@ -9,6 +9,8 @@ namespace Anubis.LC.ExtraDays
 {
     public static class TimeOfDayExtensions
     {
+        private static int extraDayPrice = 0;
+
         public static void AddXDaysToDeadline(this TimeOfDay timeOfDay, float days = 1f)
         {
             timeOfDay.timeUntilDeadline += timeOfDay.totalTime * days;
@@ -25,7 +27,7 @@ namespace Anubis.LC.ExtraDays
             return (int)days;
         }
 
-        public static int GetExtraDaysPrice(this TimeOfDay timeOfDay)
+        public static void SetExtraDaysPrice(this TimeOfDay timeOfDay)
         {
             int profitQuota = timeOfDay.profitQuota;
             float baseIncrease = 0.15f * profitQuota;
@@ -34,7 +36,13 @@ namespace Anubis.LC.ExtraDays
             float priceXRandom = baseIncrease * randommizer;
 
             int price = (int)Mathf.Clamp(priceXRandom, minIncrease, 1E+09f);
-            return price;
+
+            extraDayPrice = price;
+        }
+
+        public static int GetExtraDaysPrice(this TimeOfDay timeOfDay)
+        {
+            return extraDayPrice;
         }
 
         public static void ResetDeadline(this TimeOfDay timeOfDay, bool isShipReset = false)
