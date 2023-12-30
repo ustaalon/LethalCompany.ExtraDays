@@ -4,7 +4,7 @@ using System.Text;
 using Anubis.LC.ExtraDays.Helpers;
 using UnityEngine;
 
-namespace Anubis.LC.ExtraDays
+namespace Anubis.LC.ExtraDays.Extensions
 {
     public static class TerminalExtensions
     {

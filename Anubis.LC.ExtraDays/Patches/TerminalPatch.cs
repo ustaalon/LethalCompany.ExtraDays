@@ -1,4 +1,4 @@
-﻿using Anubis.LC.ExtraDays;
+﻿using Anubis.LC.ExtraDays.Extensions;
 using Anubis.LC.ExtraDays.Helpers;
 using HarmonyLib;
 using LethalAPI.TerminalCommands.Models;

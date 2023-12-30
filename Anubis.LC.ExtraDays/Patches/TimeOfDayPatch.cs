@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using Anubis.LC.ExtraDays.Extensions;
+using HarmonyLib;
 namespace Anubis.LC.ExtraDays.Patches
 {
     /// <summary>

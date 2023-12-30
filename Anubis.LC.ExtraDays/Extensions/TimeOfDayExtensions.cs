@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-namespace Anubis.LC.ExtraDays
+namespace Anubis.LC.ExtraDays.Extensions
 {
     public static class TimeOfDayExtensions
     {
@@ -30,7 +30,7 @@ namespace Anubis.LC.ExtraDays
                 return ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS;
             }
 
-            return (int)days;
+            return days;
         }
 
         public static int GetExtraDaysPrice(this TimeOfDay timeOfDay)
@@ -38,7 +38,7 @@ namespace Anubis.LC.ExtraDays
             int profitQuota = timeOfDay.profitQuota;
             float baseIncrease = 0.15f * profitQuota;
             float minIncrease = 0.5f * profitQuota;
-            float randommizer = (timeOfDay.quotaVariables.randomizerCurve.Evaluate(UnityEngine.Random.Range(0f, 1f)) * timeOfDay.quotaVariables.randomizerMultiplier + 1f);
+            float randommizer = timeOfDay.quotaVariables.randomizerCurve.Evaluate(UnityEngine.Random.Range(0f, 1f)) * timeOfDay.quotaVariables.randomizerMultiplier + 1f;
             float priceXRandom = baseIncrease * randommizer;
 
             int price = (int)Mathf.Clamp(priceXRandom, minIncrease, 1E+09f);
@@ -49,7 +49,7 @@ namespace Anubis.LC.ExtraDays
         {
             if (isShipReset || !ExtraDaysToDeadlineStaticHelper.IsDynamicDeadlinesModInstalled())
             {
-                timeOfDay.timeUntilDeadline = timeOfDay.totalTime * (float)ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS;
+                timeOfDay.timeUntilDeadline = timeOfDay.totalTime * ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS;
 
                 ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Deadline reset to defaults");
             }
