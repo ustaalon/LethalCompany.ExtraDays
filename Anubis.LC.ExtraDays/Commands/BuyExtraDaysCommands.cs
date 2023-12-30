@@ -6,6 +6,7 @@ using LethalAPI.TerminalCommands.Models;
 using System;
 using LethalAPI.TerminalCommands.Interfaces;
 using LethalAPI.TerminalCommands.Interactions;
+using Anubis.LC.ExtraDays.Helpers;
 
 namespace Anubis.LC.ExtraDays.Commands
 {

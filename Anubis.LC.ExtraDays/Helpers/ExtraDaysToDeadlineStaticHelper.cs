@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-namespace Anubis.LC.ExtraDays
+namespace Anubis.LC.ExtraDays.Helpers
 {
     public static class ExtraDaysToDeadlineStaticHelper
     {
@@ -13,6 +13,7 @@ namespace Anubis.LC.ExtraDays
         public readonly static string DYNAMIC_DEADLINE_MOD = "Haha.DynamicDeadline";
         public readonly static int DAYS_TO_INCREASE = 1;
         public readonly static int DEFAULT_AMOUNT_OF_DEADLINE_DAYS = 3;
+        public readonly static string DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVEFILE_KEY = "edtddeadlineDaysAmount";
 
         public static bool IsDynamicDeadlinesModInstalled()
         {

@@ -3,10 +3,11 @@ using BepInEx.Logging;
 using HarmonyLib;
 using LethalAPI.TerminalCommands.Models;
 using Anubis.LC.ExtraDays.Commands;
+using Anubis.LC.ExtraDays.Helpers;
 
 namespace Anubis.LC.ExtraDays
 {
-	[BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
+    [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
 	public class ExtraDaysToDeadlinePlugin : BaseUnityPlugin
 	{
 		private Harmony HarmonyInstance = new Harmony(PluginInfo.PLUGIN_GUID);
@@ -15,12 +16,12 @@ namespace Anubis.LC.ExtraDays
 
         private void Awake()
 		{
-			Logger.LogInfo($"{PluginInfo.PLUGIN_GUID} is loading...");
+			ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"{PluginInfo.PLUGIN_GUID} is loading...");
 
-			Logger.LogInfo($"Installing patches");
+            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Installing patches");
             HarmonyInstance.PatchAll(typeof(ExtraDaysToDeadlinePlugin).Assembly);
 
-            Logger.LogInfo($"Registering built-in Commands");
+            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Registering built-in Commands");
 
 			// Create registry for the Terminals API
 			Terminal = TerminalRegistry.CreateTerminalRegistry();
@@ -30,7 +31,7 @@ namespace Anubis.LC.ExtraDays
 
 			DontDestroyOnLoad(this);
 
-			Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
-		}
-	}
+            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
+        }
+    }
 }

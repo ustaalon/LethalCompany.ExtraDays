@@ -1,4 +1,6 @@
-﻿using BepInEx;
+﻿using Anubis.LC.ExtraDays.Helpers;
+using Anubis.LC.ExtraDays.Models;
+using BepInEx;
 using BepInEx.Bootstrap;
 using System;
 using System.Collections.Generic;
@@ -47,7 +49,7 @@ namespace Anubis.LC.ExtraDays
         {
             if (isShipReset || !ExtraDaysToDeadlineStaticHelper.IsDynamicDeadlinesModInstalled())
             {
-                timeOfDay.timeUntilDeadline = timeOfDay.totalTime * 3f;
+                timeOfDay.timeUntilDeadline = timeOfDay.totalTime * (float)ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS;
 
                 ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Deadline reset to defaults");
             }
@@ -56,20 +58,49 @@ namespace Anubis.LC.ExtraDays
             timeOfDay.SyncTimeAndDeadline();
         }
 
-        public static void ReCalculateBuyingRateForCompany(this TimeOfDay timeOfDay)
+        public static void ReCalculateBuyingRateForCompany(this TimeOfDay timeOfDay, bool tryGetFromDisk = false)
         {
-            timeOfDay.SetDeadlineDaysAmount();
+            timeOfDay.SetDeadlineDaysAmount(tryGetFromDisk);
             timeOfDay.SetBuyingRateForDay();
             StartOfRound.Instance.SyncCompanyBuyingRateClientRpc(StartOfRound.Instance.companyBuyingRate);
             ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Buying rate recalculated");
         }
 
-        public static void SetDeadlineDaysAmount(this TimeOfDay timeOfDay)
+        public static void SetDeadlineDaysAmount(this TimeOfDay timeOfDay, bool tryGetFromDisk = false)
         {
-            // To calculate buying rate for the company
-            timeOfDay.quotaVariables.deadlineDaysAmount = timeOfDay.CalculateDeadlineDaysAmount();
+            var deadlineDaysAmount = !tryGetFromDisk ? timeOfDay.CalculateDeadlineDaysAmount() : timeOfDay.GetDeadlineDaysAmountFromDisk();
 
-            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Deadline days amount: {timeOfDay.CalculateDeadlineDaysAmount()}");
+            timeOfDay.quotaVariables.deadlineDaysAmount = deadlineDaysAmount;
+            SaveHelper.WriteSettings(new Settings()
+            {
+                DeadlineDaysAmount = deadlineDaysAmount
+            });
+
+            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Deadline days amount: {deadlineDaysAmount}");
+        }
+
+        public static int GetDeadlineDaysAmountFromDisk(this TimeOfDay timeOfDay)
+        {
+            bool isHost = RoundManager.Instance.NetworkManager.IsHost;
+            if (!isHost) return timeOfDay.CalculateDeadlineDaysAmount();
+
+            int deadlineDaysAmount;
+            if (SaveHelper.IsSaveFileExists())
+            {
+                deadlineDaysAmount = SaveHelper.ReadSettings().DeadlineDaysAmount;
+                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Loaded deadlineDaysAmount from disk, deadlineDaysAmount: {deadlineDaysAmount}");
+            }
+            else
+            {
+                SaveHelper.WriteSettings(new Settings()
+                {
+                    DeadlineDaysAmount = timeOfDay.CalculateDeadlineDaysAmount()
+                });
+                deadlineDaysAmount = SaveHelper.ReadSettings().DeadlineDaysAmount;
+                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Saved deadlineDaysAmount to disk and then loaded, deadlineDaysAmount: {deadlineDaysAmount}");
+            }
+
+            return deadlineDaysAmount;
         }
 
         public static void SyncTimeAndDeadline(this TimeOfDay timeOfDay)

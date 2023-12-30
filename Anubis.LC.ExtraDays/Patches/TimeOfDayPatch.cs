@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using Unity.Netcode;
 namespace Anubis.LC.ExtraDays.Patches
 {
     /// <summary>
@@ -12,6 +13,13 @@ namespace Anubis.LC.ExtraDays.Patches
         public static void SetNewProfitQuota(TimeOfDay __instance)
         {
             __instance.ResetDeadline();
+        }
+
+        [HarmonyPatch("Start")]
+        [HarmonyPostfix]
+        public static void Start(TimeOfDay __instance)
+        {
+            __instance.ReCalculateBuyingRateForCompany(true);
         }
     }
 }
