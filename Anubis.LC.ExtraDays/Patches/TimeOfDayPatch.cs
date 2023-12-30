@@ -9,7 +9,7 @@ namespace Anubis.LC.ExtraDays.Patches
     {
         [HarmonyPatch("SetNewProfitQuota")]
         [HarmonyPostfix]
-        private static void SetNewProfitQuota(TimeOfDay __instance)
+        public static void SetNewProfitQuota(TimeOfDay __instance)
         {
             __instance.ResetDeadline();
         }

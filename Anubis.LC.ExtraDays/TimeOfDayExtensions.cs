@@ -12,8 +12,7 @@ namespace Anubis.LC.ExtraDays
         public static void AddXDaysToDeadline(this TimeOfDay timeOfDay, float days = 1f)
         {
             timeOfDay.timeUntilDeadline += timeOfDay.totalTime * days;
-            timeOfDay.quotaVariables.deadlineDaysAmount = timeOfDay.CalculateDeadlineDaysAmount(); // To calculate buying rate for the company
-            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"DeadlineDaysAmount: {timeOfDay.CalculateDeadlineDaysAmount()}");
+            timeOfDay.ReCalculateBuyingRateForCompany();
             timeOfDay.SyncTimeAndDeadline();
 
             ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Added 1 day to deadline.");
@@ -46,21 +45,32 @@ namespace Anubis.LC.ExtraDays
                 ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Deadline reset to defaults");
             }
 
+            timeOfDay.ReCalculateBuyingRateForCompany();
+            timeOfDay.SyncTimeAndDeadline();
+        }
+
+        public static void ReCalculateBuyingRateForCompany(this TimeOfDay timeOfDay)
+        {
+            timeOfDay.SetDeadlineDaysAmount();
+            timeOfDay.SetBuyingRateForDay();
+            StartOfRound.Instance.SyncCompanyBuyingRateClientRpc(StartOfRound.Instance.companyBuyingRate);
+            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Buying rate recalculated");
+        }
+
+        public static void SetDeadlineDaysAmount(this TimeOfDay timeOfDay)
+        {
+            // To calculate buying rate for the company
             timeOfDay.quotaVariables.deadlineDaysAmount = timeOfDay.CalculateDeadlineDaysAmount();
 
-            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Buying rate recalculated");
-
-            timeOfDay.SyncTimeAndDeadline();
+            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Deadline days amount: {timeOfDay.CalculateDeadlineDaysAmount()}");
         }
 
         public static void SyncTimeAndDeadline(this TimeOfDay timeOfDay)
         {
             timeOfDay.UpdateProfitQuotaCurrentTime();
             timeOfDay.SyncTimeClientRpc(timeOfDay.globalTime, (int)timeOfDay.timeUntilDeadline);
-            timeOfDay.SetBuyingRateForDay();
-            StartOfRound.Instance.SyncCompanyBuyingRateClientRpc(StartOfRound.Instance.companyBuyingRate);
 
-            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Deadline & Buying rate SYNC");
+            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Deadline sync");
         }
     }
 }
