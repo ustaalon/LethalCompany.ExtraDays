@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Anubis.LC.ExtraDays.Models;
 using Newtonsoft.Json;
@@ -11,6 +12,19 @@ namespace Anubis.LC.ExtraDays.Helpers
     public static class SaveHelper
     {
         public static readonly string filePath = Application.persistentDataPath + $"/{PluginInfo.PLUGIN_NAME}_{GameNetworkManager.Instance.currentSaveFileName}.json";
+
+        public static Settings GetDefaults()
+        {
+            return new Settings()
+            {
+                DeadlineDaysAmount = ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS
+            };
+        }
+
+        public static bool IsHost()
+        {
+            return RoundManager.Instance.NetworkManager.IsHost;
+        }
 
         public static void WriteSettings(Settings data)
         {
@@ -41,10 +55,7 @@ namespace Anubis.LC.ExtraDays.Helpers
             catch
             {
                 ExtraDaysToDeadlineStaticHelper.Logger.LogError("Could not read settings file. Using defaults");
-                return new Settings()
-                {
-                    DeadlineDaysAmount = ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS
-                };
+                return GetDefaults();
             }
         }
 
@@ -74,10 +85,7 @@ namespace Anubis.LC.ExtraDays.Helpers
 
         public static void ResetSettings()
         {
-            WriteSettings(new Settings()
-            {
-                DeadlineDaysAmount = ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS
-            });
+            WriteSettings(GetDefaults());
             ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Reset value in saved file for deadlineDaysAmount, deadlineDaysAmount: {ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS}");
         }
     }

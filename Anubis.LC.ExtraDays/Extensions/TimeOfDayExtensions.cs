@@ -71,18 +71,21 @@ namespace Anubis.LC.ExtraDays.Extensions
             var deadlineDaysAmount = !tryGetFromDisk ? timeOfDay.CalculateDeadlineDaysAmount() : timeOfDay.GetDeadlineDaysAmountFromDisk();
 
             timeOfDay.quotaVariables.deadlineDaysAmount = deadlineDaysAmount;
-            SaveHelper.WriteSettings(new Settings()
+
+            if (SaveHelper.IsHost())
             {
-                DeadlineDaysAmount = deadlineDaysAmount
-            });
+                SaveHelper.WriteSettings(new Settings()
+                {
+                    DeadlineDaysAmount = deadlineDaysAmount
+                });
+            }
 
             ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Deadline days amount: {deadlineDaysAmount}");
         }
 
         public static int GetDeadlineDaysAmountFromDisk(this TimeOfDay timeOfDay)
         {
-            bool isHost = RoundManager.Instance.NetworkManager.IsHost;
-            if (!isHost) return timeOfDay.CalculateDeadlineDaysAmount();
+            if (!SaveHelper.IsHost()) return timeOfDay.CalculateDeadlineDaysAmount();
 
             int deadlineDaysAmount;
             if (SaveHelper.IsSaveFileExists())
