@@ -12,6 +12,7 @@ namespace Anubis.LC.ExtraDays
         public static ManualLogSource Logger = BepInEx.Logging.Logger.CreateLogSource(PluginInfo.PLUGIN_GUID);
         public readonly static string DYNAMIC_DEADLINE_MOD = "Haha.DynamicDeadline";
         public readonly static int DAYS_TO_INCREASE = 1;
+        public readonly static int DEFAULT_AMOUNT_OF_DEADLINE_DAYS = 3;
 
         public static bool IsDynamicDeadlinesModInstalled()
         {

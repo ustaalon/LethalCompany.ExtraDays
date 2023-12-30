@@ -15,12 +15,19 @@ namespace Anubis.LC.ExtraDays
             timeOfDay.ReCalculateBuyingRateForCompany();
             timeOfDay.SyncTimeAndDeadline();
 
-            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Added 1 day to deadline.");
+            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Added {ExtraDaysToDeadlineStaticHelper.DAYS_TO_INCREASE} day to deadline.");
         }
 
         public static int CalculateDeadlineDaysAmount(this TimeOfDay timeOfDay)
         {
             int days = (int)Mathf.Floor(timeOfDay.timeUntilDeadline / timeOfDay.totalTime);
+
+            // if amount of days is below the default, keep it as default amount of days
+            if (days <= ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS)
+            {
+                return ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS;
+            }
+
             return (int)days;
         }
 
