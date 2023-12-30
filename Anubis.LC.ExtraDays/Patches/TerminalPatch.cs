@@ -1,8 +1,6 @@
 ﻿using Anubis.LC.ExtraDays;
 using HarmonyLib;
 using LethalAPI.TerminalCommands.Models;
-using System.Collections.Generic;
-
 
 /// <summary>
 /// Patching Terminal
@@ -19,5 +17,12 @@ internal static class TerminalPatch
             ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Company buying rate is lower than zero, recalculating...");
             TimeOfDay.Instance.ReCalculateBuyingRateForCompany();
         }
+    }
+
+    [HarmonyPatch("QuitTerminal")]
+    [HarmonyPostfix]
+    private static void QuitTerminal(Terminal __instance)
+    {
+        CommandHandler.HandleCommandInput("help", __instance);
     }
 }
