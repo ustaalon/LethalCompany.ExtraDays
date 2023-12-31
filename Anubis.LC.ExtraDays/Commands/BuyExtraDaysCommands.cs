@@ -54,6 +54,7 @@ namespace Anubis.LC.ExtraDays.Commands
         [TerminalCommand("buyday", clearText: true), CommandInfo("Ask the Company for an extra day to reach the quota")]
         public ITerminalInteraction BuyDaysCommand()
         {
+            TimeOfDay.Instance.SetExtraDaysPrice();
             var builder = new StringBuilder();
             builder.AppendLine();
             builder.AppendLine();
