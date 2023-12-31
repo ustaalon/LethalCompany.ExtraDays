@@ -1,6 +1,6 @@
 {
     "name": "ExtraDaysToDeadline",
-    "version_number": "2.0.2",
+    "version_number": "2.0.3",
     "website_url": "https://github.com/ustaalon/LethalCompany.ExtraDays",
     "description": "Allows the player to purchase an extra day via the terminal. This mod's uniqueness is that It tries to add functionality that will give you the option to extend the deadline but with some price on it.",
     "dependencies": [
