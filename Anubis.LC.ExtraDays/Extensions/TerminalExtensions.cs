@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Anubis.LC.ExtraDays.Helpers;
 using UnityEngine;
 
-namespace Anubis.LC.ExtraDays
+namespace Anubis.LC.ExtraDays.Extensions
 {
     public static class TerminalExtensions
     {
@@ -19,7 +20,7 @@ namespace Anubis.LC.ExtraDays
 
         public static void SetDaysToDeadline(this Terminal terminal)
         {
-            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Player input CONFIRM and 1 day to deadline has been added");
+            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Player input CONFIRM and {ExtraDaysToDeadlineStaticHelper.DAYS_TO_INCREASE} day to deadline has been added");
             TimeOfDay.Instance.AddXDaysToDeadline(ExtraDaysToDeadlineStaticHelper.DAYS_TO_INCREASE);
 
             float creditsFormula = TimeOfDay.Instance.GetExtraDaysPrice();
