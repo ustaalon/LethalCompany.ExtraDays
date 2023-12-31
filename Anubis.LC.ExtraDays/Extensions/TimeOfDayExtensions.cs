@@ -70,7 +70,7 @@ namespace Anubis.LC.ExtraDays.Extensions
         {
             timeOfDay.SetDeadlineDaysAmount(tryGetFromDisk);
             timeOfDay.SetBuyingRateForDay();
-            StartOfRound.Instance.SyncCompanyBuyingRateClientRpc(StartOfRound.Instance.companyBuyingRate);
+            StartOfRound.Instance.SyncCompanyBuyingRateServerRpc();
             ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Buying rate recalculated");
         }
 
