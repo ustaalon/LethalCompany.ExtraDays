@@ -33,6 +33,18 @@ namespace Anubis.LC.ExtraDays.Commands
         public string ConfirmBuyExtraDays(Terminal terminal)
         {
             var builder = new StringBuilder();
+            if(!RoundManager.Instance.NetworkManager.IsHost)
+            {
+                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Player is not the host. Deadline won't be change.");
+                builder.AppendLine();
+                builder.AppendLine("Only the ship's captain can ask for an extra day.");
+                builder.AppendLine();
+                builder.AppendLine();
+                builder.AppendLine("Cancelled order.");
+                builder.AppendLine();
+                return builder.ToString();
+            }
+
             if (!terminal.IsExtraDaysPurchasable())
             {
                 ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Player has insufficient credits to purchase an extra day");
