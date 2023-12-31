@@ -1,5 +1,5 @@
 # Extra Days
-Allows the player to purchase an extra day via the terminal. This mod's uniqueness is that it tries to be more realistic with the game, as it is not trying to modify the main logic of the deadline. It tries to add functionality that will give you extends for the deadline but with some price on it. **You can install it in additon to Dynamic Deadline mod!**
+Allows the player to purchase an extra day via the terminal. This mod's uniqueness is that it tries to be more realistic with the game, as it is not trying to modify the main logic of the deadline. It tries to add functionality that will give you extends for the deadline but with some price on it. **You can install it in addition to Dynamic Deadline mod!**
 
 ## How To Use?
 1. Enter the Ship's Terminal
