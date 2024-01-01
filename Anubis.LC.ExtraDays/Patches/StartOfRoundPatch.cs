@@ -6,7 +6,7 @@ namespace Anubis.LC.ExtraDays.Patches
     /// Patching TimeOfDay
     /// </summary>
     [HarmonyPatch(typeof(StartOfRound))]
-    internal static class StartOfRoundPatch
+    public static class StartOfRoundPatch
     {
         [HarmonyPatch("ResetShip")]
         [HarmonyPostfix]
