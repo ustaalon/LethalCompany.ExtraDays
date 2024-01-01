@@ -12,7 +12,6 @@ namespace Anubis.LC.ExtraDays.Patches
         public static int PreviousDaysUntilDeadline = TimeOfDay.Instance.daysUntilDeadline;
         public static bool DaysUntilDeadlineModuluRan = false;
 
-        [HarmonyPatch("PlotOutEnemiesForNextHour")]
         [HarmonyPatch("AdvanceHourAndSpawnNewBatchOfEnemies")]
         [HarmonyPrefix]
         public static void Prefix_PlotOutEnemiesForNextHour()
@@ -26,7 +25,6 @@ namespace Anubis.LC.ExtraDays.Patches
             }
         }
 
-        [HarmonyPatch("PlotOutEnemiesForNextHour")]
         [HarmonyPatch("AdvanceHourAndSpawnNewBatchOfEnemies")]
         [HarmonyPostfix]
         public static void Postfix_PlotOutEnemiesForNextHour()
