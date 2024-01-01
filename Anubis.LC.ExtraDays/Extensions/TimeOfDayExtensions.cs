@@ -39,11 +39,11 @@ namespace Anubis.LC.ExtraDays.Extensions
         {
             int profitQuota = timeOfDay.profitQuota;
             float baseIncrease = 0.15f * profitQuota;
-            float minIncrease = 0.5f * profitQuota;
+            float minPrice = 0.5f * profitQuota;
             float randommizer = (timeOfDay.quotaVariables.randomizerCurve.Evaluate(UnityEngine.Random.Range(0f, 1f)) * timeOfDay.quotaVariables.randomizerMultiplier + 1f);
             float priceXRandom = baseIncrease * randommizer;
 
-            int price = (int)Mathf.Clamp(priceXRandom, minIncrease, 1E+09f);
+            int price = (int)Mathf.Clamp(priceXRandom, minPrice, 1E+09f);
 
             extraDayPrice = price;
         }
