@@ -20,7 +20,7 @@ Please let me know about any bugs, issues or requests regarding my mod by openin
 
 # Release Notes
 ### 2.0.4
-- When you have higher deadline (more than 10 days), you won't see enemies (Fixing also in DynamicDeadline) ([#20](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/20))
+- Fixing enemies not spawning (also in DynamicDeadline) when you have higher deadline (more than 10 days) ([#20](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/20))
 
 ### 2.0.3
 - Fixing buying rate sync calculation
