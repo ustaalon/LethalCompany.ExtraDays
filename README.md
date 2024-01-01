@@ -37,7 +37,7 @@ Please let me know about any bugs, issues or requests regarding my mod by openin
 ### 2.0.1
 - Making this mod working with [DynamicDeadline](https://thunderstore.io/c/lethal-company/p/Krayken/DynamicDeadline/) so you can have dynamic deadlines, but if needed you can purchase more days
 
-[All changelog can be found here](https://github.com/ustaalon/LethalCompany.ExtraDays/blob/rc/Anubis.LC.ExtraDays.Package/CHANGELOG.md)
+[All changelog can be found here](https://github.com/ustaalon/LethalCompany.ExtraDays/blob/rc/CHANGELOG.md)
 
 # Additional Credits
 Thanks to [Lethal Company Community on Github](https://github.com/LethalCompany) for making modding easy for Lethal Company.
