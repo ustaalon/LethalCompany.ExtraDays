@@ -19,6 +19,9 @@ So by using my mod, it will fix those issues for both of them.
 Please let me know about any bugs, issues or requests regarding my mod by opening an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues) or by sending me an email at bowbeforeanubis@gmail.com
 
 # Release Notes
+### 2.0.4
+- Fixing enemies not spawning (also in DynamicDeadline) when you have higher deadline (more than 10 days) ([#20](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/20))
+
 ### 2.0.3
 - Fixing buying rate sync calculation
 - Fixing group credits sync after buying an extra day ([#18](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/18))
@@ -29,13 +32,10 @@ Please let me know about any bugs, issues or requests regarding my mod by openin
 - Fixing buying rate issues due to high deadline days ([#10](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/10))
 - Fixing terminal issues with the `buyday` command ([#9](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/9))
 - Fixing minor bugs and refactoring
-- Buying rate will now be saved to local (for host only)
+- Fixing buying rate reset on new loaded game (loading saved file) or negative buying rate
 
 ### 2.0.1
-- Making the mod working with [DynamicDeadline](https://thunderstore.io/c/lethal-company/p/Krayken/DynamicDeadline/) so you can have dynamic deadlines but if needed - you can purchase more days
-
-### 2.0.0
-- Refactoring all code base and adjusting dependencies
+- Making this mod working with [DynamicDeadline](https://thunderstore.io/c/lethal-company/p/Krayken/DynamicDeadline/) so you can have dynamic deadlines, but if needed you can purchase more days
 
 [All changelog can be found here](https://github.com/ustaalon/LethalCompany.ExtraDays/blob/rc/Anubis.LC.ExtraDays.Package/CHANGELOG.md)
 
