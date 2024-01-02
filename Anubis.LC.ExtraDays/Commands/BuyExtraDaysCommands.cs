@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using System.Text;
 using GameNetcodeStuff;
-using LethalAPI.TerminalCommands.Attributes;
-using LethalAPI.TerminalCommands.Models;
+using LethalAPI.LibTerminal.Attributes;
+using LethalAPI.LibTerminal.Models;
 using System;
-using LethalAPI.TerminalCommands.Interfaces;
-using LethalAPI.TerminalCommands.Interactions;
+using LethalAPI.LibTerminal.Interfaces;
+using LethalAPI.LibTerminal.Interactions;
 using Anubis.LC.ExtraDays.Helpers;
 using Anubis.LC.ExtraDays.Extensions;
 

@@ -1,7 +1,7 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
-using LethalAPI.TerminalCommands.Models;
+using LethalAPI.LibTerminal.Models;
 using Anubis.LC.ExtraDays.Commands;
 using Anubis.LC.ExtraDays.Helpers;
 
