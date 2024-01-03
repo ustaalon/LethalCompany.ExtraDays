@@ -13,6 +13,7 @@ All players need to have the mod installed to play.
 I did the relevant adjustments so it will work without any issues, so you can play both mods together. Moreover, I fix two major issues that happens when you have more than 3 days of deadline, that happens in both mods:
 - Enemies not spawning when you have deadline higher than 10 days or more
 - Negative buying rate from the company
+
 So by using my mod, it will fix those issues for both of them.
 
 ## Bugs, Issues & requests
