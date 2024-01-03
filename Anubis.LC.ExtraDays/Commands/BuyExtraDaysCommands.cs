@@ -68,8 +68,6 @@ namespace Anubis.LC.ExtraDays.Commands
         {
             TimeOfDay.Instance.SetExtraDaysPrice();
             var builder = new StringBuilder();
-            builder.AppendLine();
-            builder.AppendLine();
             builder.AppendLine(string.Format("You're about to ask the Company for ONE extra day to reach the profit quota. It will cost you {0} credits.", TimeOfDay.Instance.GetExtraDaysPrice()));
 
             var terminalNode = new TerminalNode()
