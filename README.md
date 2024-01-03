@@ -13,10 +13,11 @@ All players need to have the mod installed to play.
 I did the relevant adjustments so it will work without any issues, so you can play both mods together. Moreover, I fix two major issues that happens when you have more than 3 days of deadline, that happens in both mods:
 - Enemies not spawning when you have deadline higher than 10 days or more
 - Negative buying rate from the company
+
 So by using my mod, it will fix those issues for both of them.
 
 ## Bugs, Issues & requests
-Please let me know about any bugs, issues or requests regarding my mod by opening an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues) or by sending me an email at bowbeforeanubis@gmail.com
+Please let me know about any bugs, issues or requests regarding my mod by opening an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues), by leaving a comment in [this Discord channel](https://discord.com/channels/1168655651455639582/1190842600534573056) or by sending me an email at ustaalon@gmail.com
 
 # Release Notes
 ### 2.0.4
