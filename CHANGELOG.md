@@ -1,3 +1,6 @@
+### 2.0.5
+- Fixing enemies not spawning (also in DynamicDeadline) when you have higher deadline (edge case missed)
+
 ### 2.0.4
 - Fixing enemies not spawning (also in DynamicDeadline) when you have higher deadline (more than 10 days) ([#20](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/20))
 

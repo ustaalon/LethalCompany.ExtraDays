@@ -1,3 +1,6 @@
+### 2.0.5
+- Fixing enemies not spawning (also in DynamicDeadline) when you have higher deadline (edge case missed)
+
 ### 2.0.4
 - Fixing enemies not spawning (also in DynamicDeadline) when you have higher deadline (more than 10 days) ([#20](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/20))
 
@@ -12,8 +15,5 @@
 - Fixing terminal issues with the `buyday` command ([#9](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/9))
 - Fixing minor bugs and refactoring
 - Fixing buying rate reset on new loaded game (loading saved file) or negative buying rate
-
-### 2.0.1
-- Making this mod working with [DynamicDeadline](https://thunderstore.io/c/lethal-company/p/Krayken/DynamicDeadline/) so you can have dynamic deadlines, but if needed you can purchase more days
 
 [All changelog can be found here](https://github.com/ustaalon/LethalCompany.ExtraDays/blob/rc/CHANGELOG.md)
