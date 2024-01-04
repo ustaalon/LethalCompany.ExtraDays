@@ -9,12 +9,15 @@ Allows the player to purchase an extra day via the terminal. This mod's uniquene
 
 All players need to have the mod installed to play.
 
+### What do you think about the price of a day?
+Please [let me know](https://discord.com/channels/1168655651455639582/1190842600534573056) what do you think - is it too expensive? should it be correlated or not to the quota or is it too cheap?
+
 ### If you are using it with DynamicDeadline mod
 I did the relevant adjustments so it will work without any issues, so you can play both mods together. Moreover, I fix two major issues that happens when you have higher deadline:
 - Enemies not spawning when you have deadline higher than 10 days or more
 - Negative buying rate from the company
 
-So by using my mod, it will fix those issues for both of them.
+So by using this mod, it will fix those issues for both of them.
 
 ## Bugs, Issues & requests
 Please let me know about any bugs, issues or requests regarding my mod by opening an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues), by leaving a comment in [this Discord channel](https://discord.com/channels/1168655651455639582/1190842600534573056) or by sending me an email at ustaalon@gmail.com
