@@ -11,14 +11,18 @@ All players need to have the mod installed to play.
 
 ### If you are using it with DynamicDeadline mod
 I did the relevant adjustments so it will work without any issues, so you can play both mods together. Moreover, I fix two major issues that happens when you have higher deadline:
-- Enemies are not spawning when you have deadline higher than 10 days or more
+- Enemies not spawning when you have deadline higher than 10 days or more
 - Negative buying rate from the company
+
 So by using my mod, it will fix those issues for both of them.
 
 ## Bugs, Issues & requests
-Please let me know about any bugs, issues or requests regarding my mod by opening an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues) or by sending me an email at bowbeforeanubis@gmail.com
+Please let me know about any bugs, issues or requests regarding my mod by opening an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues), by leaving a comment in [this Discord channel](https://discord.com/channels/1168655651455639582/1190842600534573056) or by sending me an email at ustaalon@gmail.com
 
 # Release Notes
+### 2.0.5
+- Fixing enemies not spawning (also in DynamicDeadline) when you have higher deadline (edge case missed)
+
 ### 2.0.4
 - Fixing enemies not spawning (also in DynamicDeadline) when you have higher deadline (more than 10 days) ([#20](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/20))
 
@@ -34,10 +38,7 @@ Please let me know about any bugs, issues or requests regarding my mod by openin
 - Fixing minor bugs and refactoring
 - Fixing buying rate reset on new loaded game (loading saved file) or negative buying rate
 
-### 2.0.1
-- Making this mod working with [DynamicDeadline](https://thunderstore.io/c/lethal-company/p/Krayken/DynamicDeadline/) so you can have dynamic deadlines, but if needed you can purchase more days
-
-[All changelog can be found here](https://github.com/ustaalon/LethalCompany.ExtraDays/blob/rc/Anubis.LC.ExtraDays.Package/CHANGELOG.md)
+[All changelog can be found here](https://github.com/ustaalon/LethalCompany.ExtraDays/blob/rc/CHANGELOG.md)
 
 # Additional Credits
 Thanks to [Lethal Company Community on Github](https://github.com/LethalCompany) for making modding easy for Lethal Company.

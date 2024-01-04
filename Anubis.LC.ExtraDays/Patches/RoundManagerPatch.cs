@@ -13,6 +13,7 @@ namespace Anubis.LC.ExtraDays.Patches
         public static bool DaysUntilDeadlineModuluRan = false;
 
         [HarmonyPatch("AdvanceHourAndSpawnNewBatchOfEnemies")]
+        [HarmonyPatch("BeginEnemySpawning")]
         [HarmonyPrefix]
         public static void Prefix_PlotOutEnemiesForNextHour()
         {
@@ -26,6 +27,7 @@ namespace Anubis.LC.ExtraDays.Patches
         }
 
         [HarmonyPatch("AdvanceHourAndSpawnNewBatchOfEnemies")]
+        [HarmonyPatch("BeginEnemySpawning")]
         [HarmonyPostfix]
         public static void Postfix_PlotOutEnemiesForNextHour()
         {
