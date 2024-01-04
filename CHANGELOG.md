@@ -1,3 +1,6 @@
+### 2.0.6
+- Fixed version in DLL file, required new version bump
+
 ### 2.0.5
 - Fixing enemies not spawning (also in DynamicDeadline) when you have higher deadline (edge case missed)
 
