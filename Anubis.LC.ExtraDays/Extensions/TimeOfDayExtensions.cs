@@ -88,7 +88,7 @@ namespace Anubis.LC.ExtraDays.Extensions
                 });
             }
 
-            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Deadline days amount: {deadlineDaysAmount}");
+            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Deadline days amount: {deadlineDaysAmount} (To calculate buying rate)");
         }
 
         public static int GetDeadlineDaysAmountFromDisk(this TimeOfDay timeOfDay)
