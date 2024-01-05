@@ -44,6 +44,9 @@
     <Reference Include="LethalAPI.TerminalCommands">
       <HintPath>..\..\lib\LethalAPI.TerminalCommands.dll</HintPath>
     </Reference>
+    <Reference Include="LethalConfig">
+      <HintPath>..\..\lib\LethalConfig\LethalConfig.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Netcode.Runtime">
       <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.Netcode.Runtime.dll</HintPath>
       <Private>False</Private>

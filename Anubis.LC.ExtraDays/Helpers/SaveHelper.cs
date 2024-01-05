@@ -11,7 +11,7 @@ namespace Anubis.LC.ExtraDays.Helpers
 {
     public static class SaveHelper
     {
-        public static readonly string filePath = Application.persistentDataPath + $"/{PluginInfo.PLUGIN_NAME}_{GameNetworkManager.Instance.currentSaveFileName}.json";
+        public static readonly string CurrentGameSaveFile = Application.persistentDataPath + $"/{ExtraDaysToDeadlineStaticHelper.modGUID}_{GameNetworkManager.Instance.currentSaveFileName}.json";
 
         public static Settings GetDefaults()
         {
@@ -32,7 +32,7 @@ namespace Anubis.LC.ExtraDays.Helpers
             {
                 string jsonString = JsonConvert.SerializeObject(data, Formatting.Indented);
 
-                File.WriteAllText(filePath, jsonString);
+                File.WriteAllText(CurrentGameSaveFile, jsonString);
                 ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Settings file created/updated");
             }
             catch
@@ -45,7 +45,7 @@ namespace Anubis.LC.ExtraDays.Helpers
         {
             try
             {
-                string jsonString = File.ReadAllText(filePath);
+                string jsonString = File.ReadAllText(CurrentGameSaveFile);
 
                 Settings data = JsonConvert.DeserializeObject<Settings>(jsonString);
 
@@ -61,7 +61,7 @@ namespace Anubis.LC.ExtraDays.Helpers
 
         public static bool IsSaveFileExists()
         {
-            return File.Exists(filePath);
+            return File.Exists(CurrentGameSaveFile);
         }
 
         public static void DeleteSettings()
@@ -75,7 +75,7 @@ namespace Anubis.LC.ExtraDays.Helpers
             try
             {
                 ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Settings file has been deleted");
-                File.Delete(filePath);
+                File.Delete(CurrentGameSaveFile);
             }
             catch
             {

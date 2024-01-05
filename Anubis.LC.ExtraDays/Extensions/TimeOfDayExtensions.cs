@@ -1,10 +1,5 @@
 ﻿using Anubis.LC.ExtraDays.Helpers;
 using Anubis.LC.ExtraDays.Models;
-using BepInEx;
-using BepInEx.Bootstrap;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace Anubis.LC.ExtraDays.Extensions
@@ -37,15 +32,21 @@ namespace Anubis.LC.ExtraDays.Extensions
 
         public static void SetExtraDaysPrice(this TimeOfDay timeOfDay)
         {
-            int profitQuota = timeOfDay.profitQuota;
-            float baseIncrease = 0.15f * profitQuota;
-            float minPrice = 0.5f * profitQuota;
-            float randommizer = (timeOfDay.quotaVariables.randomizerCurve.Evaluate(UnityEngine.Random.Range(0f, 1f)) * timeOfDay.quotaVariables.randomizerMultiplier + 1f);
-            float priceXRandom = baseIncrease * randommizer;
+            ModSettings settings = ModSettingsHelper.ReadSettings();
+            if (settings.IsCorrelatedCalculation)
+            {
+                int profitQuota = timeOfDay.profitQuota;
+                float baseIncrease = 0.15f * profitQuota;
+                float minPrice = 0.5f * profitQuota;
+                float randommizer = (timeOfDay.quotaVariables.randomizerCurve.Evaluate(UnityEngine.Random.Range(0f, 1f)) * timeOfDay.quotaVariables.randomizerMultiplier + 1f);
+                float priceXRandom = baseIncrease * randommizer;
 
-            int price = (int)Mathf.Clamp(priceXRandom, minPrice, 1E+09f);
+                int price = (int)Mathf.Clamp(priceXRandom, minPrice, 1E+09f);
 
-            extraDayPrice = price;
+                extraDayPrice = price;
+            }
+
+            extraDayPrice = ExtraDaysToDeadlineStaticHelper.CONSTANT_PRICE;
         }
 
         public static int GetExtraDaysPrice(this TimeOfDay timeOfDay)
