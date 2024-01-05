@@ -13,18 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Attributes\**" />
-    <Compile Remove="Interactions\**" />
-    <Compile Remove="Interfaces\**" />
-    <EmbeddedResource Remove="Attributes\**" />
-    <EmbeddedResource Remove="Interactions\**" />
-    <EmbeddedResource Remove="Interfaces\**" />
-    <None Remove="Attributes\**" />
-    <None Remove="Interactions\**" />
-    <None Remove="Interfaces\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
     <PackageReference Include="BepInEx.Core" Version="5.*" />
     <PackageReference Include="BepInEx.PluginInfoProps" Version="1.*" />
@@ -61,4 +49,8 @@
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="move &quot;$(TargetDir)$(TargetFileName)&quot; &quot;$(SolutionDir)Anubis.LC.ExtraDays.Package/&quot;" />
+  </Target>
 </Project>
