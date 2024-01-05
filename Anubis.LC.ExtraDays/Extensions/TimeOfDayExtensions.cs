@@ -7,6 +7,7 @@ namespace Anubis.LC.ExtraDays.Extensions
     public static class TimeOfDayExtensions
     {
         private static int extraDayPrice = 0;
+        private static bool IsCorrelatedCalculation = true;
 
         public static void AddXDaysToDeadline(this TimeOfDay timeOfDay, float days = 1f)
         {
@@ -32,8 +33,7 @@ namespace Anubis.LC.ExtraDays.Extensions
 
         public static void SetExtraDaysPrice(this TimeOfDay timeOfDay)
         {
-            ModSettings settings = ModSettingsHelper.ReadSettings();
-            if (settings.IsCorrelatedCalculation)
+            if (timeOfDay.GetIsCorrelatedCalculation())
             {
                 int profitQuota = timeOfDay.profitQuota;
                 float baseIncrease = 0.15f * profitQuota;
@@ -121,6 +121,16 @@ namespace Anubis.LC.ExtraDays.Extensions
             timeOfDay.SyncTimeClientRpc(timeOfDay.globalTime, (int)timeOfDay.timeUntilDeadline);
 
             ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Deadline sync");
+        }
+
+        public static void SetIsCorrelatedCalculation(this TimeOfDay timeOfDay, bool isCorrelatedCalculation)
+        {
+            IsCorrelatedCalculation = isCorrelatedCalculation;
+        }
+
+        public static bool GetIsCorrelatedCalculation(this TimeOfDay timeOfDay)
+        {
+            return IsCorrelatedCalculation;
         }
     }
 }

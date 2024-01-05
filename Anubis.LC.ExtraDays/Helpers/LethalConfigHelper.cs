@@ -5,6 +5,7 @@ using System.Reflection;
 using UnityEngine;
 using LethalConfig;
 using Anubis.LC.ExtraDays.Models;
+using Anubis.LC.ExtraDays.Extensions;
 
 namespace Anubis.LC.ExtraDays.Helpers
 {
@@ -12,12 +13,10 @@ namespace Anubis.LC.ExtraDays.Helpers
     {
         public static void SetLehalConfig(ConfigFile config)
         {
-            ModSettings settings = ModSettingsHelper.ReadSettings();
-
-            var configEntry = config.Bind("General", "Use price correlated calculation?", settings.IsCorrelatedCalculation, "This determines if the price to buy an extra day will be constant value or correlated to the quota");
+            var configEntry = config.Bind("General", "Use price correlated calculation?", true, "This determines if the price to buy an extra day will be constant value or correlated to the quota");
             configEntry.SettingChanged += (obj, args) =>
             {
-                ModSettingsHelper.WriteSettings(configEntry.Value);
+                TimeOfDay.Instance.SetIsCorrelatedCalculation(configEntry.Value);
             };
             LethalConfigManager.AddConfigItem(new BoolCheckBoxConfigItem(configEntry, false));
 
@@ -29,11 +28,10 @@ namespace Anubis.LC.ExtraDays.Helpers
         {
             try
             {
-                Sprite NewSprite = new Sprite();
-                Texture2D SpriteTexture = LoadTexture(filePath);
-                NewSprite = Sprite.Create(SpriteTexture, new Rect(0, 0, SpriteTexture.width, SpriteTexture.height), new Vector2(0, 0), pixelsPerUnit);
+                Texture2D spriteTexture = LoadTexture(filePath);
+                var newSprite = Sprite.Create(spriteTexture, new Rect(0, 0, spriteTexture.width, spriteTexture.height), new Vector2(0, 0), pixelsPerUnit);
 
-                return NewSprite;
+                return newSprite;
             }
             catch
             {
@@ -43,16 +41,16 @@ namespace Anubis.LC.ExtraDays.Helpers
 
         private static Texture2D LoadTexture(string filePath)
         {
-            Texture2D Tex2D;
-            byte[] FileData;
+            Texture2D tex2D;
+            byte[] fileData;
 
             if (File.Exists(filePath))
             {
-                FileData = File.ReadAllBytes(filePath);
-                Tex2D = new Texture2D(2, 2);
-                if (Tex2D.LoadImage(FileData))
+                fileData = File.ReadAllBytes(filePath);
+                tex2D = new Texture2D(2, 2);
+                if (tex2D.LoadImage(fileData))
                 {
-                    return Tex2D;
+                    return tex2D;
                 }
             }
             return null;
