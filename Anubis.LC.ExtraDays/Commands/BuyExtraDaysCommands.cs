@@ -33,7 +33,7 @@ namespace Anubis.LC.ExtraDays.Commands
         public string ConfirmBuyExtraDays(Terminal terminal)
         {
             var builder = new StringBuilder();
-            if(!RoundManager.Instance.NetworkManager.IsHost)
+            if (!RoundManager.Instance.NetworkManager.IsHost)
             {
                 ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Player is not the host. Deadline won't be change.");
                 builder.AppendLine();
@@ -66,8 +66,20 @@ namespace Anubis.LC.ExtraDays.Commands
         [TerminalCommand("buyday", clearText: true), CommandInfo("Ask the Company for an extra day to reach the quota")]
         public ITerminalInteraction BuyDaysCommand()
         {
-            TimeOfDay.Instance.SetExtraDaysPrice();
             var builder = new StringBuilder();
+            if (!RoundManager.Instance.NetworkManager.IsHost)
+            {
+                builder.AppendLine();
+                builder.AppendLine("Only the ship's captain can ask for an extra day.");
+                builder.AppendLine();
+                builder.AppendLine();
+                builder.AppendLine("Cancelled order.");
+                builder.AppendLine();
+                return new TerminalInteraction()
+                    .WithPrompt(builder.ToString());
+            }
+
+            TimeOfDay.Instance.SetExtraDaysPrice();
             builder.AppendLine();
             builder.AppendLine();
             builder.AppendLine(string.Format("You're about to ask the Company for ONE extra day to reach the profit quota. It will cost you {0} credits.", TimeOfDay.Instance.GetExtraDaysPrice()));

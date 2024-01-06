@@ -13,7 +13,7 @@ namespace Anubis.LC.ExtraDays.Patches
         [HarmonyPostfix]
         public static void ResetSavedValues()
         {
-            SaveHelper.ResetSettings();
+            SaveGameHelper.ResetSettings();
         }
     }
 

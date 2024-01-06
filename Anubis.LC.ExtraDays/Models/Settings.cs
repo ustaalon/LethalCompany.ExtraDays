@@ -7,5 +7,6 @@ namespace Anubis.LC.ExtraDays.Models
     public class Settings
     {
         public int DeadlineDaysAmount { get; set; }
+        public bool IsCorrelatedPriceCalculation { get; set; }
     }
 }

@@ -3,7 +3,7 @@ using BepInEx.Logging;
 
 namespace Anubis.LC.ExtraDays.Helpers
 {
-    public static class ExtraDaysToDeadlineStaticHelper
+    public class ExtraDaysToDeadlineStaticHelper
     {
         public const string modGUID = "ExtraDaysToDeadline";
         public const string modName = "ExtraDaysToDeadline";
@@ -15,15 +15,14 @@ namespace Anubis.LC.ExtraDays.Helpers
         public readonly static int DEFAULT_AMOUNT_OF_DEADLINE_DAYS = 3;
         public readonly static int CONSTANT_PRICE = 350;
 
-        public static bool IsDynamicDeadlinesModInstalled()
+        public static bool IsThisModInstalled(string mod)
         {
-            var DYNAMIC_DEADLINE_MOD = "Haha.DynamicDeadline";
-            if (Chainloader.PluginInfos.TryGetValue(DYNAMIC_DEADLINE_MOD, out BepInEx.PluginInfo dynamicDeadlinesMod))
+            if (Chainloader.PluginInfos.TryGetValue(mod, out BepInEx.PluginInfo modInfo))
             {
-                Logger.LogInfo($"Mod ${DYNAMIC_DEADLINE_MOD} is loaded alongside {modGUID}");
+                Logger.LogInfo($"Mod ${mod} is loaded alongside {modGUID}");
                 return true;
             }
-            Logger.LogInfo($"Mod ${DYNAMIC_DEADLINE_MOD} is not loaded alongside {modGUID}");
+            Logger.LogInfo($"Mod ${mod} is not loaded alongside {modGUID}");
             return false;
         }
     }

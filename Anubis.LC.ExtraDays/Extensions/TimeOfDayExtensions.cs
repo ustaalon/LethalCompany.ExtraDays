@@ -7,7 +7,6 @@ namespace Anubis.LC.ExtraDays.Extensions
     public static class TimeOfDayExtensions
     {
         private static int extraDayPrice = 0;
-        private static bool IsCorrelatedCalculation = true;
 
         public static void AddXDaysToDeadline(this TimeOfDay timeOfDay, float days = 1f)
         {
@@ -33,7 +32,7 @@ namespace Anubis.LC.ExtraDays.Extensions
 
         public static void SetExtraDaysPrice(this TimeOfDay timeOfDay)
         {
-            if (timeOfDay.GetIsCorrelatedCalculation())
+            if (LethalConfigHelper.IsCorrelatedPriceCalculation.Value)
             {
                 int profitQuota = timeOfDay.profitQuota;
                 float baseIncrease = 0.15f * profitQuota;
@@ -45,8 +44,10 @@ namespace Anubis.LC.ExtraDays.Extensions
 
                 extraDayPrice = price;
             }
-
-            extraDayPrice = ExtraDaysToDeadlineStaticHelper.CONSTANT_PRICE;
+            else
+            {
+                extraDayPrice = ExtraDaysToDeadlineStaticHelper.CONSTANT_PRICE;
+            }
         }
 
         public static int GetExtraDaysPrice(this TimeOfDay timeOfDay)
@@ -56,7 +57,7 @@ namespace Anubis.LC.ExtraDays.Extensions
 
         public static void ResetDeadline(this TimeOfDay timeOfDay, bool isShipReset = false)
         {
-            if (isShipReset || !ExtraDaysToDeadlineStaticHelper.IsDynamicDeadlinesModInstalled())
+            if (isShipReset || !ExtraDaysToDeadlineStaticHelper.IsThisModInstalled("Haha.DynamicDeadline"))
             {
                 timeOfDay.timeUntilDeadline = timeOfDay.totalTime * ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS;
 
@@ -77,38 +78,34 @@ namespace Anubis.LC.ExtraDays.Extensions
 
         public static void SetDeadlineDaysAmount(this TimeOfDay timeOfDay, bool tryGetFromDisk = false)
         {
+            if (!RoundManager.Instance.NetworkManager.IsHost) return;
+
             var deadlineDaysAmount = !tryGetFromDisk ? timeOfDay.CalculateDeadlineDaysAmount() : timeOfDay.GetDeadlineDaysAmountFromDisk();
 
             timeOfDay.quotaVariables.deadlineDaysAmount = deadlineDaysAmount;
 
-            if (SaveHelper.IsHost())
-            {
-                SaveHelper.WriteSettings(new Settings()
-                {
-                    DeadlineDaysAmount = deadlineDaysAmount
-                });
-            }
+            new SaveGameHelper()
+                .SetDeadlineDaysAmount(deadlineDaysAmount)
+                .Save();
 
             ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Deadline days amount: {deadlineDaysAmount} (To calculate buying rate)");
         }
 
         public static int GetDeadlineDaysAmountFromDisk(this TimeOfDay timeOfDay)
         {
-            if (!SaveHelper.IsHost()) return timeOfDay.CalculateDeadlineDaysAmount();
-
             int deadlineDaysAmount;
-            if (SaveHelper.IsSaveFileExists())
+            if (SaveGameHelper.IsSaveFileExists())
             {
-                deadlineDaysAmount = SaveHelper.ReadSettings().DeadlineDaysAmount;
+                deadlineDaysAmount = SaveGameHelper.ReadSettings().DeadlineDaysAmount;
                 ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Loaded deadlineDaysAmount from disk, deadlineDaysAmount: {deadlineDaysAmount}");
             }
             else
             {
-                SaveHelper.WriteSettings(new Settings()
-                {
-                    DeadlineDaysAmount = timeOfDay.CalculateDeadlineDaysAmount()
-                });
-                deadlineDaysAmount = SaveHelper.ReadSettings().DeadlineDaysAmount;
+                new SaveGameHelper()
+                    .SetDeadlineDaysAmount(timeOfDay.CalculateDeadlineDaysAmount())
+                    .Save();
+
+                deadlineDaysAmount = SaveGameHelper.ReadSettings().DeadlineDaysAmount;
                 ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Saved deadlineDaysAmount to disk and then loaded, deadlineDaysAmount: {deadlineDaysAmount}");
             }
 
@@ -121,16 +118,6 @@ namespace Anubis.LC.ExtraDays.Extensions
             timeOfDay.SyncTimeClientRpc(timeOfDay.globalTime, (int)timeOfDay.timeUntilDeadline);
 
             ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Deadline sync");
-        }
-
-        public static void SetIsCorrelatedCalculation(this TimeOfDay timeOfDay, bool isCorrelatedCalculation)
-        {
-            IsCorrelatedCalculation = isCorrelatedCalculation;
-        }
-
-        public static bool GetIsCorrelatedCalculation(this TimeOfDay timeOfDay)
-        {
-            return IsCorrelatedCalculation;
         }
     }
 }

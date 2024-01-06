@@ -13,7 +13,7 @@ namespace Anubis.LC.ExtraDays.Patches
         [HarmonyPrefix]
         public static void DeleteFile()
         {
-            SaveHelper.DeleteSettings();
+            SaveGameHelper.DeleteSettings();
         }
     }
 }

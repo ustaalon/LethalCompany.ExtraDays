@@ -1,29 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.CompilerServices;
-using System.Text;
+﻿using System.IO;
 using Anubis.LC.ExtraDays.Models;
 using Newtonsoft.Json;
 using UnityEngine;
 
 namespace Anubis.LC.ExtraDays.Helpers
 {
-    public static class SaveHelper
+    public class SaveGameHelper
     {
         public static readonly string CurrentGameSaveFile = Application.persistentDataPath + $"/{ExtraDaysToDeadlineStaticHelper.modGUID}_{GameNetworkManager.Instance.currentSaveFileName}.json";
+
+        public int deadlineDaysAmount = GetDefaults().DeadlineDaysAmount;
+        public bool isCorrelatedPriceCalculation = GetDefaults().IsCorrelatedPriceCalculation;
 
         public static Settings GetDefaults()
         {
             return new Settings()
             {
-                DeadlineDaysAmount = ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS
+                DeadlineDaysAmount = ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS,
+                IsCorrelatedPriceCalculation = LethalConfigHelper.IsCorrelatedPriceCalculation.Value
             };
         }
 
-        public static bool IsHost()
+        public SaveGameHelper SetDeadlineDaysAmount(int value)
         {
-            return RoundManager.Instance.NetworkManager.IsHost;
+            deadlineDaysAmount = value;
+            return this;
+        }
+
+        public SaveGameHelper SetIsCorrelatedPriceCalculation(bool value)
+        {
+            isCorrelatedPriceCalculation = value;
+            return this;
+        }
+
+        public void Save()
+        {
+            WriteSettings(new Settings()
+            {
+                DeadlineDaysAmount = this.deadlineDaysAmount,
+                IsCorrelatedPriceCalculation = this.isCorrelatedPriceCalculation
+            });
         }
 
         public static void WriteSettings(Settings data)

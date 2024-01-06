@@ -35,31 +35,28 @@
   <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp" HintPath="$(LC_REFERENCES)\Assembly-CSharp.dll" Publicize="True" Private="False" />
+    <Reference Include="Unity.Netcode.Runtime" HintPath="$(LC_REFERENCES)\Unity.Netcode.Runtime.dll" Private="False" />
+    <Reference Include="Unity.TextMeshPro" HintPath="$(LC_REFERENCES)\Unity.TextMeshPro.dll" Private="False" />
+    <Reference Include="UnityEngine.UI" HintPath="$(LC_REFERENCES)\UnityEngine.UI.dll" Private="False" />
+  </ItemGroup>
+  
   
   <ItemGroup>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Assembly-CSharp.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="LethalAPI.TerminalCommands">
       <HintPath>..\..\lib\LethalAPI.TerminalCommands.dll</HintPath>
     </Reference>
     <Reference Include="LethalConfig">
-      <HintPath>..\..\lib\LethalConfig\LethalConfig.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Netcode.Runtime">
-      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.Netcode.Runtime.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.TextMeshPro.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.UI.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>$(TS_REFERENCES)\AinaVT-LethalConfig\LethalConfig\LethalConfig.dll</HintPath>
     </Reference>
   </ItemGroup>
+  
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <!-- <Exec Command="move &quot;$(TargetDir)$(TargetFileName)&quot; &quot;$(GAME_REFERENCES)&quot;" /> -->
+    <Exec Command="move &quot;$(TargetDir)$(TargetFileName)&quot; &quot;$(TS_REFERENCES)Anubis-ExtraDaysToDeadline\&quot;" />
+    <Exec Command="move &quot;$(TargetDir)LethalAPI.TerminalCommands.dll&quot; &quot;$(TS_REFERENCES)Anubis-ExtraDaysToDeadline\&quot;" />
+  </Target>
   
   <ItemGroup>
     <Folder Include="Properties\" />
