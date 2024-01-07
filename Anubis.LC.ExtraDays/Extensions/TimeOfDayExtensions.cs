@@ -32,7 +32,7 @@ namespace Anubis.LC.ExtraDays.Extensions
 
         public static void SetExtraDaysPrice(this TimeOfDay timeOfDay)
         {
-            if (LethalConfigHelper.IsCorrelatedPriceCalculation.Value)
+            if (LethalConfigHelper.GetConfigForSaveFile().Value)
             {
                 int profitQuota = timeOfDay.profitQuota;
                 float baseIncrease = 0.15f * profitQuota;
@@ -84,9 +84,7 @@ namespace Anubis.LC.ExtraDays.Extensions
 
             timeOfDay.quotaVariables.deadlineDaysAmount = deadlineDaysAmount;
 
-            new SaveGameHelper()
-                .SetDeadlineDaysAmount(deadlineDaysAmount)
-                .Save();
+            SaveGameHelper.WriteSettings(new Settings() { DeadlineDaysAmount = deadlineDaysAmount });
 
             ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Deadline days amount: {deadlineDaysAmount} (To calculate buying rate)");
         }
@@ -101,10 +99,7 @@ namespace Anubis.LC.ExtraDays.Extensions
             }
             else
             {
-                new SaveGameHelper()
-                    .SetDeadlineDaysAmount(timeOfDay.CalculateDeadlineDaysAmount())
-                    .Save();
-
+                SaveGameHelper.WriteSettings(new Settings() { DeadlineDaysAmount = timeOfDay.CalculateDeadlineDaysAmount() });
                 deadlineDaysAmount = SaveGameHelper.ReadSettings().DeadlineDaysAmount;
                 ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Saved deadlineDaysAmount to disk and then loaded, deadlineDaysAmount: {deadlineDaysAmount}");
             }

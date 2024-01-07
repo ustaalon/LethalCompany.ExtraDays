@@ -10,36 +10,13 @@ namespace Anubis.LC.ExtraDays.Helpers
         public static readonly string CurrentGameSaveFile = Application.persistentDataPath + $"/{ExtraDaysToDeadlineStaticHelper.modGUID}_{GameNetworkManager.Instance.currentSaveFileName}.json";
 
         public int deadlineDaysAmount = GetDefaults().DeadlineDaysAmount;
-        public bool isCorrelatedPriceCalculation = GetDefaults().IsCorrelatedPriceCalculation;
 
         public static Settings GetDefaults()
         {
             return new Settings()
             {
-                DeadlineDaysAmount = ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS,
-                IsCorrelatedPriceCalculation = LethalConfigHelper.IsCorrelatedPriceCalculation.Value
+                DeadlineDaysAmount = ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS
             };
-        }
-
-        public SaveGameHelper SetDeadlineDaysAmount(int value)
-        {
-            deadlineDaysAmount = value;
-            return this;
-        }
-
-        public SaveGameHelper SetIsCorrelatedPriceCalculation(bool value)
-        {
-            isCorrelatedPriceCalculation = value;
-            return this;
-        }
-
-        public void Save()
-        {
-            WriteSettings(new Settings()
-            {
-                DeadlineDaysAmount = this.deadlineDaysAmount,
-                IsCorrelatedPriceCalculation = this.isCorrelatedPriceCalculation
-            });
         }
 
         public static void WriteSettings(Settings data)

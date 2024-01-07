@@ -14,6 +14,7 @@ namespace Anubis.LC.ExtraDays.Patches
         public static void DeleteFile()
         {
             SaveGameHelper.DeleteSettings();
+            LethalConfigHelper.GetConfigForSaveFile().Value = true;
         }
     }
 }
