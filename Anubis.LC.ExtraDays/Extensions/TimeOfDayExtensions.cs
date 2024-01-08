@@ -57,7 +57,9 @@ namespace Anubis.LC.ExtraDays.Extensions
 
         public static void ResetDeadline(this TimeOfDay timeOfDay, bool isShipReset = false)
         {
-            if (isShipReset || !ExtraDaysToDeadlineStaticHelper.IsThisModInstalled("Haha.DynamicDeadline"))
+            if (isShipReset
+                || !ExtraDaysToDeadlineStaticHelper.IsThisModInstalled("Haha.DynamicDeadline")
+                || !ExtraDaysToDeadlineStaticHelper.IsThisModInstalled("LethalOrg.ProgressiveDeadline"))
             {
                 timeOfDay.timeUntilDeadline = timeOfDay.totalTime * ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS;
 
@@ -84,24 +86,34 @@ namespace Anubis.LC.ExtraDays.Extensions
 
             timeOfDay.quotaVariables.deadlineDaysAmount = deadlineDaysAmount;
 
-            SaveGameHelper.WriteSettings(new Settings() { DeadlineDaysAmount = deadlineDaysAmount });
+            string currentSaveFile = GameNetworkManager.Instance.currentSaveFileName;
+
+            ES3.Save<int>(ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, deadlineDaysAmount, currentSaveFile);
 
             ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Deadline days amount: {deadlineDaysAmount} (To calculate buying rate)");
         }
 
         public static int GetDeadlineDaysAmountFromDisk(this TimeOfDay timeOfDay)
         {
+            string currentSaveFile = GameNetworkManager.Instance.currentSaveFileName;
             int deadlineDaysAmount;
+
             if (SaveGameHelper.IsSaveFileExists())
             {
-                deadlineDaysAmount = SaveGameHelper.ReadSettings().DeadlineDaysAmount;
-                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Loaded deadlineDaysAmount from disk, deadlineDaysAmount: {deadlineDaysAmount}");
+                ES3.Save<int>(ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, SaveGameHelper.ReadSettings().DeadlineDaysAmount, currentSaveFile);
+                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"(Compatibility) Saved old .json save file into game save file");
+                SaveGameHelper.DeleteSettings();
             }
-            else
+
+            if (!ES3.KeyExists(ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, currentSaveFile))
             {
-                SaveGameHelper.WriteSettings(new Settings() { DeadlineDaysAmount = timeOfDay.CalculateDeadlineDaysAmount() });
-                deadlineDaysAmount = SaveGameHelper.ReadSettings().DeadlineDaysAmount;
+                ES3.Save<int>(ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, timeOfDay.CalculateDeadlineDaysAmount(), currentSaveFile);
+                deadlineDaysAmount = ES3.Load<int>(ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, currentSaveFile);
                 ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Saved deadlineDaysAmount to disk and then loaded, deadlineDaysAmount: {deadlineDaysAmount}");
+            } else
+            {
+                deadlineDaysAmount = ES3.Load<int>(ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, currentSaveFile);
+                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Loaded deadlineDaysAmount from disk, deadlineDaysAmount: {deadlineDaysAmount}");
             }
 
             return deadlineDaysAmount;

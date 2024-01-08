@@ -13,7 +13,8 @@ namespace Anubis.LC.ExtraDays.Patches
         [HarmonyPostfix]
         public static void ResetSavedValues()
         {
-            SaveGameHelper.ResetSettings();
+            string currentSaveFile = GameNetworkManager.Instance.currentSaveFileName;
+            ES3.Save<int>(ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS, currentSaveFile);
         }
     }
 

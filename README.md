@@ -9,7 +9,7 @@ Allows the player to purchase an extra day via the terminal. This mod's uniquene
 
 All players need to have the mod installed to play.
 
-### If you are using it with DynamicDeadline mod
+### If you are using it with DynamicDeadline or ProgressiveDeadline mod
 I did the relevant adjustments so it will work without any issues, so you can play both mods together. Moreover, I fix two major issues that happens when you have higher deadline:
 - Enemies not spawning when you have deadline higher than 10 days or more
 - Negative buying rate from the company
@@ -24,6 +24,7 @@ Please let me know about any bugs, issues or requests regarding my mod by openin
 - Added support for [LethalConfig](https://thunderstore.io/c/lethal-company/p/AinaVT/LethalConfig/)
 - Added support for [LethalAPI.Terminal](https://thunderstore.io/c/lethal-company/p/LethalAPI/LethalAPI_Terminal/). V1 is finally out!
 - Added config menu to give the host option for each save file to choose if he prefer correlated price or constant value price (350 credits) for each extra day
+- Added support for [ProgressiveDeadline](https://thunderstore.io/c/lethal-company/p/LethalOrg/ProgressiveDeadline/)
 
 ### 2.0.6
 - Fixed version in DLL file, required new version bump
@@ -36,6 +37,6 @@ Please let me know about any bugs, issues or requests regarding my mod by openin
 
 [All changelog can be found here](https://github.com/ustaalon/LethalCompany.ExtraDays/blob/rc/CHANGELOG.md)
 
-# Additional Credits
+## Additional Credits
 Thanks to [Lethal Company Community on Github](https://github.com/LethalCompany) for making modding easy for Lethal Company.
 Thanks, also, to [LethalAPI.TerminalCommands](https://github.com/LethalCompany/LethalAPI.TerminalCommands) for adding the ability to make new commands.
