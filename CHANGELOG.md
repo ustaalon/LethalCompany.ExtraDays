@@ -1,3 +1,8 @@
+### 2.1.0
+- Added support for [LethalConfig](https://thunderstore.io/c/lethal-company/p/AinaVT/LethalConfig/)
+- Added support for [LethalAPI.Terminal](https://thunderstore.io/c/lethal-company/p/LethalAPI/LethalAPI_Terminal/). V1 is finally out!
+- Added config menu to give the host option for each save file to choose if he prefer correlated price or constant value price (350 credits) for each extra day
+
 ### 2.0.6
 - Fixed version in DLL file, required new version bump
 
