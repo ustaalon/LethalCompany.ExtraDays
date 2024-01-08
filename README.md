@@ -25,6 +25,9 @@ Please let me know about any bugs, issues or requests regarding my mod by openin
 Please consider support by [this link](https://ko-fi.com/ustaalon). It will help me to continue and focus on mods and open-source.
 
 # Release Notes
+### 2.1.1
+- LethalConfig fixed an [issue](https://github.com/AinaVT/LethalConfig/issues/19) from their end. Needed to bump version
+
 ### 2.1.0
 - Added support for [LethalConfig](https://thunderstore.io/c/lethal-company/p/AinaVT/LethalConfig/)
 - Added support for [LethalAPI.Terminal](https://thunderstore.io/c/lethal-company/p/LethalAPI/LethalAPI_Terminal/). V1 is finally out!
@@ -33,12 +36,6 @@ Please consider support by [this link](https://ko-fi.com/ustaalon). It will help
 
 ### 2.0.6
 - Fixed version in DLL file, required new version bump
-
-### 2.0.5
-- Fixing enemies not spawning (also in DynamicDeadline) when you have a higher deadline (edge case missed)
-
-### 2.0.4
-- Fixing enemies not spawning (also in DynamicDeadline) when you have a higher deadline (more than 10 days) ([#20](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/20))
 
 [All changelogs can be found here](https://github.com/ustaalon/LethalCompany.ExtraDays/blob/rc/CHANGELOG.md)
 
