@@ -4,25 +4,13 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>ExtraDaysToDeadline</AssemblyName>
     <Description>Allows the player to purchase an extra day via the terminal. This mod's uniqueness is that It tries to add functionality that will give you the option to extend the deadline but with some price on it.</Description>
-    <Version>2.0.6</Version>
+    <Version>2.1.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <Authors>Anubis</Authors>
     <Company />
     <PackageTags>LethalCompany LethalCompanyMods</PackageTags>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Attributes\**" />
-    <Compile Remove="Interactions\**" />
-    <Compile Remove="Interfaces\**" />
-    <EmbeddedResource Remove="Attributes\**" />
-    <EmbeddedResource Remove="Interactions\**" />
-    <EmbeddedResource Remove="Interfaces\**" />
-    <None Remove="Attributes\**" />
-    <None Remove="Interactions\**" />
-    <None Remove="Interfaces\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
@@ -35,30 +23,29 @@
   <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp" HintPath="$(LC_REFERENCES)\Assembly-CSharp.dll" Publicize="True" Private="False" />
+    <Reference Include="Assembly-CSharp-firstpass" HintPath="$(LC_REFERENCES)\Assembly-CSharp-firstpass.dll" Publicize="True" Private="False" />
+    <Reference Include="Unity.Netcode.Runtime" HintPath="$(LC_REFERENCES)\Unity.Netcode.Runtime.dll" Private="False" />
+    <Reference Include="Unity.TextMeshPro" HintPath="$(LC_REFERENCES)\Unity.TextMeshPro.dll" Private="False" />
+    <Reference Include="UnityEngine.UI" HintPath="$(LC_REFERENCES)\UnityEngine.UI.dll" Private="False" />
+  </ItemGroup>
   
   <ItemGroup>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Assembly-CSharp.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="LethalAPI.Terminal">
+      <HintPath>$(TS_REFERENCES)\LethalAPI-LethalAPI_Terminal\LethalAPI.Terminal.dll</HintPath>
     </Reference>
-    <Reference Include="LethalAPI.TerminalCommands">
-      <HintPath>..\..\lib\LethalAPI.TerminalCommands.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Netcode.Runtime">
-      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.Netcode.Runtime.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\Unity.TextMeshPro.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\Lethal Company\Lethal Company_Data\Managed\UnityEngine.UI.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="LethalConfig">
+      <HintPath>$(TS_REFERENCES)\AinaVT-LethalConfig\LethalConfig\LethalConfig.dll</HintPath>
     </Reference>
   </ItemGroup>
   
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="move &quot;$(TargetDir)$(TargetFileName)&quot; &quot;$(SolutionDir)Anubis.LC.ExtraDays.Package/&quot;" />
+  </Target>
 </Project>

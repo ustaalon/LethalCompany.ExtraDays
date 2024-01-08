@@ -1,10 +1,5 @@
 ﻿using Anubis.LC.ExtraDays.Helpers;
 using Anubis.LC.ExtraDays.Models;
-using BepInEx;
-using BepInEx.Bootstrap;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UnityEngine;
 
 namespace Anubis.LC.ExtraDays.Extensions
@@ -37,15 +32,22 @@ namespace Anubis.LC.ExtraDays.Extensions
 
         public static void SetExtraDaysPrice(this TimeOfDay timeOfDay)
         {
-            int profitQuota = timeOfDay.profitQuota;
-            float baseIncrease = 0.15f * profitQuota;
-            float minPrice = 0.5f * profitQuota;
-            float randommizer = (timeOfDay.quotaVariables.randomizerCurve.Evaluate(UnityEngine.Random.Range(0f, 1f)) * timeOfDay.quotaVariables.randomizerMultiplier + 1f);
-            float priceXRandom = baseIncrease * randommizer;
+            if (LethalConfigHelper.GetConfigForSaveFile().Value)
+            {
+                int profitQuota = timeOfDay.profitQuota;
+                float baseIncrease = 0.15f * profitQuota;
+                float minPrice = 0.5f * profitQuota;
+                float randommizer = (timeOfDay.quotaVariables.randomizerCurve.Evaluate(UnityEngine.Random.Range(0f, 1f)) * timeOfDay.quotaVariables.randomizerMultiplier + 1f);
+                float priceXRandom = baseIncrease * randommizer;
 
-            int price = (int)Mathf.Clamp(priceXRandom, minPrice, 1E+09f);
+                int price = (int)Mathf.Clamp(priceXRandom, minPrice, 1E+09f);
 
-            extraDayPrice = price;
+                extraDayPrice = price;
+            }
+            else
+            {
+                extraDayPrice = ExtraDaysToDeadlineStaticHelper.CONSTANT_PRICE;
+            }
         }
 
         public static int GetExtraDaysPrice(this TimeOfDay timeOfDay)
@@ -55,7 +57,9 @@ namespace Anubis.LC.ExtraDays.Extensions
 
         public static void ResetDeadline(this TimeOfDay timeOfDay, bool isShipReset = false)
         {
-            if (isShipReset || !ExtraDaysToDeadlineStaticHelper.IsDynamicDeadlinesModInstalled())
+            if (isShipReset
+                || !ExtraDaysToDeadlineStaticHelper.IsThisModInstalled("Haha.DynamicDeadline")
+                || !ExtraDaysToDeadlineStaticHelper.IsThisModInstalled("LethalOrg.ProgressiveDeadline"))
             {
                 timeOfDay.timeUntilDeadline = timeOfDay.totalTime * ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS;
 
@@ -76,39 +80,40 @@ namespace Anubis.LC.ExtraDays.Extensions
 
         public static void SetDeadlineDaysAmount(this TimeOfDay timeOfDay, bool tryGetFromDisk = false)
         {
+            if (!RoundManager.Instance.NetworkManager.IsHost) return;
+
             var deadlineDaysAmount = !tryGetFromDisk ? timeOfDay.CalculateDeadlineDaysAmount() : timeOfDay.GetDeadlineDaysAmountFromDisk();
 
             timeOfDay.quotaVariables.deadlineDaysAmount = deadlineDaysAmount;
 
-            if (SaveHelper.IsHost())
-            {
-                SaveHelper.WriteSettings(new Settings()
-                {
-                    DeadlineDaysAmount = deadlineDaysAmount
-                });
-            }
+            string currentSaveFile = GameNetworkManager.Instance.currentSaveFileName;
+
+            ES3.Save<int>(ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, deadlineDaysAmount, currentSaveFile);
 
             ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Deadline days amount: {deadlineDaysAmount} (To calculate buying rate)");
         }
 
         public static int GetDeadlineDaysAmountFromDisk(this TimeOfDay timeOfDay)
         {
-            if (!SaveHelper.IsHost()) return timeOfDay.CalculateDeadlineDaysAmount();
-
+            string currentSaveFile = GameNetworkManager.Instance.currentSaveFileName;
             int deadlineDaysAmount;
-            if (SaveHelper.IsSaveFileExists())
+
+            if (SaveGameHelper.IsSaveFileExists())
             {
-                deadlineDaysAmount = SaveHelper.ReadSettings().DeadlineDaysAmount;
-                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Loaded deadlineDaysAmount from disk, deadlineDaysAmount: {deadlineDaysAmount}");
+                ES3.Save<int>(ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, SaveGameHelper.ReadSettings().DeadlineDaysAmount, currentSaveFile);
+                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"(Compatibility) Saved old .json save file into game save file");
+                SaveGameHelper.DeleteSettings();
             }
-            else
+
+            if (!ES3.KeyExists(ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, currentSaveFile))
             {
-                SaveHelper.WriteSettings(new Settings()
-                {
-                    DeadlineDaysAmount = timeOfDay.CalculateDeadlineDaysAmount()
-                });
-                deadlineDaysAmount = SaveHelper.ReadSettings().DeadlineDaysAmount;
+                ES3.Save<int>(ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, timeOfDay.CalculateDeadlineDaysAmount(), currentSaveFile);
+                deadlineDaysAmount = ES3.Load<int>(ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, currentSaveFile);
                 ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Saved deadlineDaysAmount to disk and then loaded, deadlineDaysAmount: {deadlineDaysAmount}");
+            } else
+            {
+                deadlineDaysAmount = ES3.Load<int>(ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, currentSaveFile);
+                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Loaded deadlineDaysAmount from disk, deadlineDaysAmount: {deadlineDaysAmount}");
             }
 
             return deadlineDaysAmount;
