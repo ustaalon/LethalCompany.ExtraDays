@@ -66,7 +66,6 @@ namespace Anubis.LC.ExtraDays.Commands
             var builder = new StringBuilder();
             if (!RoundManager.Instance.NetworkManager.IsHost)
             {
-                builder.AppendLine();
                 builder.AppendLine("Only the ship's captain can ask for an extra day.");
                 builder.AppendLine();
                 builder.AppendLine();
@@ -77,13 +76,10 @@ namespace Anubis.LC.ExtraDays.Commands
             }
 
             TimeOfDay.Instance.SetExtraDaysPrice();
-            builder.AppendLine();
-            builder.AppendLine();
-            builder.AppendLine(string.Format("You're about to ask the Company for ONE extra day to reach the profit quota. It will cost you {0} credits.", TimeOfDay.Instance.GetExtraDaysPrice()));
 
             var terminalNode = new TerminalNode()
             {
-                displayText = builder.ToString(),
+                displayText = string.Format("You're about to ask the Company for ONE extra day to reach the profit quota. It will cost you {0} credits.", TimeOfDay.Instance.GetExtraDaysPrice()),
                 clearPreviousText = true,
                 name = "buyday"
             };
