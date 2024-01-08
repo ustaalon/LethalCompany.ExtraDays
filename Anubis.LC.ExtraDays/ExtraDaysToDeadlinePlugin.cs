@@ -1,37 +1,44 @@
 ﻿using BepInEx;
-using BepInEx.Logging;
 using HarmonyLib;
-using LethalAPI.TerminalCommands.Models;
+using LethalAPI.LibTerminal.Models;
 using Anubis.LC.ExtraDays.Commands;
 using Anubis.LC.ExtraDays.Helpers;
+using LethalAPI.LibTerminal;
 
 namespace Anubis.LC.ExtraDays
 {
-    [BepInPlugin(PluginInfo.PLUGIN_GUID, PluginInfo.PLUGIN_NAME, PluginInfo.PLUGIN_VERSION)]
-	public class ExtraDaysToDeadlinePlugin : BaseUnityPlugin
-	{
-		private Harmony HarmonyInstance = new Harmony(PluginInfo.PLUGIN_GUID);
+    [BepInPlugin(modGUID, modName, modVersion)]
+    [BepInDependency("ainavt.lc.lethalconfig")]
+    public class ExtraDaysToDeadlinePlugin : BaseUnityPlugin
+    {
+        private const string modGUID = ExtraDaysToDeadlineStaticHelper.modGUID;
+        private const string modName = ExtraDaysToDeadlineStaticHelper.modName;
+        private const string modVersion = ExtraDaysToDeadlineStaticHelper.modVersion;
 
-		private TerminalModRegistry Terminal;
+        private Harmony m_Harmony = new Harmony(modGUID);
+
+        private TerminalModRegistry m_Registry;
 
         private void Awake()
-		{
-			ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"{PluginInfo.PLUGIN_GUID} is loading...");
+        {
+            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"{modGUID} is loading...");
 
             ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Installing patches");
-            HarmonyInstance.PatchAll(typeof(ExtraDaysToDeadlinePlugin).Assembly);
+            m_Harmony.PatchAll(typeof(ExtraDaysToDeadlinePlugin).Assembly);
 
             ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Registering built-in Commands");
 
-			// Create registry for the Terminals API
-			Terminal = TerminalRegistry.CreateTerminalRegistry();
+            // Create registry for the Terminals API
+            m_Registry = TerminalRegistry.CreateTerminalRegistry();
 
-			// Register commands, don't care about the instance
-			Terminal.RegisterFrom<BuyExtraDaysCommands>();
+            // Register commands, don't care about the instance
+            m_Registry.RegisterFrom<BuyExtraDaysCommands>();
 
-			DontDestroyOnLoad(this);
+            LethalConfigHelper.SetLehalConfig(Config);
 
-            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Plugin {PluginInfo.PLUGIN_GUID} is loaded!");
+            DontDestroyOnLoad(this);
+
+            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Plugin {modGUID} is loaded!");
         }
     }
 }

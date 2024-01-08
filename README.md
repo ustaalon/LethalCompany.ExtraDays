@@ -9,7 +9,7 @@ Allows the player to purchase an extra day via the terminal. This mod's uniquene
 
 All players need to have the mod installed to play.
 
-### If you are using it with DynamicDeadline mod
+### If you are using it with DynamicDeadline or ProgressiveDeadline mod
 I did the relevant adjustments so it will work without any issues, so you can play both mods together. Moreover, I fix two major issues that happens when you have higher deadline:
 - Enemies not spawning when you have deadline higher than 10 days or more
 - Negative buying rate from the company
@@ -20,6 +20,12 @@ So by using my mod, it will fix those issues for both of them.
 Please let me know about any bugs, issues or requests regarding my mod by opening an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues), by leaving a comment in [this Discord channel](https://discord.com/channels/1168655651455639582/1190842600534573056) or by sending me an email at ustaalon@gmail.com
 
 # Release Notes
+### 2.1.0
+- Added support for [LethalConfig](https://thunderstore.io/c/lethal-company/p/AinaVT/LethalConfig/)
+- Added support for [LethalAPI.Terminal](https://thunderstore.io/c/lethal-company/p/LethalAPI/LethalAPI_Terminal/). V1 is finally out!
+- Added config menu to give the host option for each save file to choose if he prefer correlated price or constant value price (350 credits) for each extra day
+- Added support for [ProgressiveDeadline](https://thunderstore.io/c/lethal-company/p/LethalOrg/ProgressiveDeadline/)
+
 ### 2.0.6
 - Fixed version in DLL file, required new version bump
 
@@ -29,36 +35,8 @@ Please let me know about any bugs, issues or requests regarding my mod by openin
 ### 2.0.4
 - Fixing enemies not spawning (also in DynamicDeadline) when you have higher deadline (more than 10 days) ([#20](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/20))
 
-### 2.0.3
-- Fixing buying rate sync calculation
-- Fixing group credits sync after buying an extra day ([#18](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/18))
-- Fixing when buying an extra day not sync with everybody else ([#19](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/19))
-    - Only ship's captain (host) can purchase an extra day (with that everyone will be in sync)
-
-### 2.0.2
-- Fixing buying rate issues due to high deadline days ([#10](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/10))
-- Fixing terminal issues with the `buyday` command ([#9](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/9))
-- Fixing minor bugs and refactoring
-- Fixing buying rate reset on new loaded game (loading saved file) or negative buying rate
-
 [All changelog can be found here](https://github.com/ustaalon/LethalCompany.ExtraDays/blob/rc/CHANGELOG.md)
 
-# Additional Credits
+## Additional Credits
 Thanks to [Lethal Company Community on Github](https://github.com/LethalCompany) for making modding easy for Lethal Company.
 Thanks, also, to [LethalAPI.TerminalCommands](https://github.com/LethalCompany/LethalAPI.TerminalCommands) for adding the ability to make new commands.
-
-By using that mod, these changes are apply as well:
-* Reduces the delay after entering the terminal before you can type by 80%
-  *  You ever open the terminal and start typing, even hearing the keyboard sound, but it doesn't write anything? This fixes that.
-
-* Disable scrolling to the top of the terminal on every command execution
-  *  This now only happens when a command clears the screen.
-    
-* Trims newlines from the start of command responses
-  *  The game force adds newlines to the start of commands, which causes issues for commands that don't clear the terminal. 
-
-* `Terminal.PlayVideoFile(string filePath)`
-  * Allows you to play local files in the background of the terminal
-    
-* `Terminal.PlayVideoLink(Uri url)`
-  * Allows you to play remote videos in the background of the terminal

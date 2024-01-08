@@ -9,35 +9,19 @@ Allows the player to purchase an extra day via the terminal. This mod's uniquene
 
 All players need to have the mod installed to play.
 
-### What do you think about the price of a day?
-Please [let me know](https://discord.com/channels/1168655651455639582/1190842600534573056) what do you think - is it too expensive? should it be correlated or not to the quota or is it too cheap?
-
-### If you are using it with DynamicDeadline mod
+### If you are using it with DynamicDeadline or ProgressiveDeadline mod
 I did the relevant adjustments so it will work without any issues, so you can play both mods together. Moreover, I fix two major issues that happens when you have higher deadline:
 - Enemies not spawning when you have deadline higher than 10 days or more
 - Negative buying rate from the company
 
 So by using this mod, it will fix those issues for both of them.
 
+## For modspacks and people who use the mod
+This mod getting updates and improvements almost every week. Make sure you have the latest version. If you have any feedback - [please do let me know](https://discord.com/channels/1168655651455639582/1190842600534573056)
+
 ## Bugs, Issues & requests
 Please let me know about any bugs, issues or requests regarding my mod by opening an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues), by leaving a comment in [this Discord channel](https://discord.com/channels/1168655651455639582/1190842600534573056) or by sending me an email at ustaalon@gmail.com
 
-# Additional Credits
+## Additional Credits
 Thanks to [Lethal Company Community on Github](https://github.com/LethalCompany) for making modding easy for Lethal Company.
 Thanks, also, to [LethalAPI.TerminalCommands](https://github.com/LethalCompany/LethalAPI.TerminalCommands) for adding the ability to make new commands.
-
-By using that mod, these changes are apply as well:
-* Reduces the delay after entering the terminal before you can type by 80%
-  *  You ever open the terminal and start typing, even hearing the keyboard sound, but it doesn't write anything? This fixes that.
-
-* Disable scrolling to the top of the terminal on every command execution
-  *  This now only happens when a command clears the screen.
-    
-* Trims newlines from the start of command responses
-  *  The game force adds newlines to the start of commands, which causes issues for commands that don't clear the terminal. 
-
-* `Terminal.PlayVideoFile(string filePath)`
-  * Allows you to play local files in the background of the terminal
-    
-* `Terminal.PlayVideoLink(Uri url)`
-  * Allows you to play remote videos in the background of the terminal
