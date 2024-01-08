@@ -19,6 +19,8 @@ So by using my mod, it will fix those issues for both of them.
 ## Bugs, Issues & requests
 Please let me know about any bugs, issues or requests regarding my mod by opening an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues), by leaving a comment in [this Discord channel](https://discord.com/channels/1168655651455639582/1190842600534573056) or by sending me an email at ustaalon@gmail.com
 
+Please consider support by [this link](https://ko-fi.com/ustaalon). It will help me to continue and focus on mods and open-source.
+
 # Release Notes
 ### 2.1.0
 - Added support for [LethalConfig](https://thunderstore.io/c/lethal-company/p/AinaVT/LethalConfig/)

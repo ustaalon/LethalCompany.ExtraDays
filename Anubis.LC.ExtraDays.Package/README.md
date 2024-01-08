@@ -22,6 +22,8 @@ This mod getting updates and improvements almost every week. Make sure you have 
 ## Bugs, Issues & requests
 Please let me know about any bugs, issues or requests regarding my mod by opening an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues), by leaving a comment in [this Discord channel](https://discord.com/channels/1168655651455639582/1190842600534573056) or by sending me an email at ustaalon@gmail.com
 
+Please consider support by [this link](https://ko-fi.com/ustaalon). It will help me to continue and focus on mods and open-source.
+
 ## Additional Credits
 Thanks to [Lethal Company Community on Github](https://github.com/LethalCompany) for making modding easy for Lethal Company.
 Thanks, also, to [LethalAPI.TerminalCommands](https://github.com/LethalCompany/LethalAPI.TerminalCommands) for adding the ability to make new commands.

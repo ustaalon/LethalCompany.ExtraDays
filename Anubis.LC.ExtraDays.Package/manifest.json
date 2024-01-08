@@ -6,6 +6,6 @@
     "dependencies": [
         "BepInEx-BepInExPack-5.4.2100",
         "LethalAPI-LethalAPI_Terminal-1.0.0",
-        "AinaVT-LethalConfig-1.3.0"
+        "AinaVT-LethalConfig-1.3.1"
     ]
 }
