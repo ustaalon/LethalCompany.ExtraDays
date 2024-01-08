@@ -1,8 +1,9 @@
 ﻿using BepInEx;
 using HarmonyLib;
-using LethalAPI.TerminalCommands.Models;
+using LethalAPI.LibTerminal.Models;
 using Anubis.LC.ExtraDays.Commands;
 using Anubis.LC.ExtraDays.Helpers;
+using LethalAPI.LibTerminal;
 
 namespace Anubis.LC.ExtraDays
 {
@@ -14,24 +15,24 @@ namespace Anubis.LC.ExtraDays
         private const string modName = ExtraDaysToDeadlineStaticHelper.modName;
         private const string modVersion = ExtraDaysToDeadlineStaticHelper.modVersion;
 
-        private Harmony HarmonyInstance = new Harmony(modGUID);
+        private Harmony m_Harmony = new Harmony(modGUID);
 
-        private TerminalModRegistry Terminal;
+        private TerminalModRegistry m_Registry;
 
         private void Awake()
         {
             ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"{modGUID} is loading...");
 
             ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Installing patches");
-            HarmonyInstance.PatchAll(typeof(ExtraDaysToDeadlinePlugin).Assembly);
+            m_Harmony.PatchAll(typeof(ExtraDaysToDeadlinePlugin).Assembly);
 
             ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Registering built-in Commands");
 
             // Create registry for the Terminals API
-            Terminal = TerminalRegistry.CreateTerminalRegistry();
+            m_Registry = TerminalRegistry.CreateTerminalRegistry();
 
             // Register commands, don't care about the instance
-            Terminal.RegisterFrom<BuyExtraDaysCommands>();
+            m_Registry.RegisterFrom<BuyExtraDaysCommands>();
 
             LethalConfigHelper.SetLehalConfig(Config);
 

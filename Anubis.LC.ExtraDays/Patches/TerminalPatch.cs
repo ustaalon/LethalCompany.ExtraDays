@@ -1,7 +1,7 @@
 ﻿using Anubis.LC.ExtraDays.Extensions;
 using Anubis.LC.ExtraDays.Helpers;
 using HarmonyLib;
-using LethalAPI.TerminalCommands.Models;
+using LethalAPI.LibTerminal.Models;
 
 /// <summary>
 /// Patching Terminal

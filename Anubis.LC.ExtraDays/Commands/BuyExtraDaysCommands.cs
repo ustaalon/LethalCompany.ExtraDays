@@ -1,8 +1,8 @@
 ﻿using System.Text;
-using LethalAPI.TerminalCommands.Attributes;
-using LethalAPI.TerminalCommands.Models;
-using LethalAPI.TerminalCommands.Interfaces;
-using LethalAPI.TerminalCommands.Interactions;
+using LethalAPI.LibTerminal.Attributes;
+using LethalAPI.LibTerminal.Models;
+using LethalAPI.LibTerminal.Interfaces;
+using LethalAPI.LibTerminal.Interactions;
 using Anubis.LC.ExtraDays.Helpers;
 using Anubis.LC.ExtraDays.Extensions;
 

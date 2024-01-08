@@ -4,25 +4,13 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>ExtraDaysToDeadline</AssemblyName>
     <Description>Allows the player to purchase an extra day via the terminal. This mod's uniqueness is that It tries to add functionality that will give you the option to extend the deadline but with some price on it.</Description>
-    <Version>2.0.6</Version>
+    <Version>2.1.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <Authors>Anubis</Authors>
     <Company />
     <PackageTags>LethalCompany LethalCompanyMods</PackageTags>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="Attributes\**" />
-    <Compile Remove="Interactions\**" />
-    <Compile Remove="Interfaces\**" />
-    <EmbeddedResource Remove="Attributes\**" />
-    <EmbeddedResource Remove="Interactions\**" />
-    <EmbeddedResource Remove="Interfaces\**" />
-    <None Remove="Attributes\**" />
-    <None Remove="Interactions\**" />
-    <None Remove="Interfaces\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
@@ -35,6 +23,7 @@
   <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
   </ItemGroup>
+
   <ItemGroup>
     <Reference Include="Assembly-CSharp" HintPath="$(LC_REFERENCES)\Assembly-CSharp.dll" Publicize="True" Private="False" />
     <Reference Include="Unity.Netcode.Runtime" HintPath="$(LC_REFERENCES)\Unity.Netcode.Runtime.dll" Private="False" />
@@ -42,21 +31,14 @@
     <Reference Include="UnityEngine.UI" HintPath="$(LC_REFERENCES)\UnityEngine.UI.dll" Private="False" />
   </ItemGroup>
   
-  
   <ItemGroup>
-    <Reference Include="LethalAPI.TerminalCommands">
-      <HintPath>..\..\lib\LethalAPI.TerminalCommands.dll</HintPath>
+    <Reference Include="LethalAPI.Terminal">
+      <HintPath>$(TS_REFERENCES)\LethalAPI-LethalAPI_Terminal\LethalAPI.Terminal.dll</HintPath>
     </Reference>
     <Reference Include="LethalConfig">
       <HintPath>$(TS_REFERENCES)\AinaVT-LethalConfig\LethalConfig\LethalConfig.dll</HintPath>
     </Reference>
   </ItemGroup>
-  
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <!-- <Exec Command="move &quot;$(TargetDir)$(TargetFileName)&quot; &quot;$(GAME_REFERENCES)&quot;" /> -->
-    <Exec Command="move &quot;$(TargetDir)$(TargetFileName)&quot; &quot;$(TS_REFERENCES)Anubis-ExtraDaysToDeadline\&quot;" />
-    <Exec Command="move &quot;$(TargetDir)LethalAPI.TerminalCommands.dll&quot; &quot;$(TS_REFERENCES)Anubis-ExtraDaysToDeadline\&quot;" />
-  </Target>
   
   <ItemGroup>
     <Folder Include="Properties\" />
