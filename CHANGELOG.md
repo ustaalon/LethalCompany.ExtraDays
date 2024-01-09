@@ -1,3 +1,6 @@
+### 2.1.2
+- LethalAPI_Terminal fixed an [issue](https://github.com/LethalCompany/LethalAPI.Terminal/issues/30). Needed to bump version
+
 ### 2.1.1
 - LethalConfig fixed an [issue](https://github.com/AinaVT/LethalConfig/issues/19) from their end. Needed to bump version
 

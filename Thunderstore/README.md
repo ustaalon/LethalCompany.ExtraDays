@@ -9,6 +9,9 @@ Allows the player to purchase an extra day via the terminal. This mod's uniquene
 
 All players need to have the mod installed to play.
 
+## Modpacks
+This mod getting updates frequently and do have support. Make sure you have the latest version. If you facing any issues, do let me know.
+
 ### If you are using it with DynamicDeadline or ProgressiveDeadline mod
 I made the relevant adjustments so it will work without any issues so that you can play both mods together. Moreover, I fix two major issues that happens when you have higher deadline:
 - Enemies not spawning when you have a deadline higher than 10 days or more
