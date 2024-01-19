@@ -14,7 +14,7 @@ namespace Anubis.LC.ExtraDays.Helpers
         public readonly static int DAYS_TO_INCREASE = 1;
         public readonly static int DEFAULT_AMOUNT_OF_DEADLINE_DAYS = 3;
         public readonly static string DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY = $"{modGUID}_deadlineDaysAmount";
-        public readonly static int CONSTANT_PRICE = 15;
+        public readonly static int CONSTANT_PRICE = 350;
 
         public static bool IsThisModInstalled(string mod)
         {
