@@ -17,7 +17,7 @@ namespace Anubis.LC.ExtraDays.Commands
         [TerminalCommand("deny", clearText: false)]
         public string DenyBuyExtraDays()
         {
-            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Player denied so the deadline didn't change!");
+            ModStaticHelper.Logger.LogInfo("Player denied so the deadline didn't change!");
             var builder = new StringBuilder();
             builder.AppendLine();
             builder.AppendLine("Cancelled order.");
@@ -32,7 +32,7 @@ namespace Anubis.LC.ExtraDays.Commands
             var builder = new StringBuilder();
             if (!RoundManager.Instance.NetworkManager.IsHost)
             {
-                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Player is not the host. Deadline won't be change.");
+                ModStaticHelper.Logger.LogInfo("Player is not the host. Deadline won't be change.");
                 builder.AppendLine();
                 builder.AppendLine("Only the ship's captain can ask for an extra day.");
                 builder.AppendLine();
@@ -44,7 +44,7 @@ namespace Anubis.LC.ExtraDays.Commands
 
             if (!terminal.IsExtraDaysPurchasable())
             {
-                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Player has insufficient credits to purchase an extra day");
+                ModStaticHelper.Logger.LogInfo("Player has insufficient credits to purchase an extra day");
                 builder.AppendLine();
                 builder.AppendLine("You don't have enough credits to buy an extra day.");
                 builder.AppendLine();

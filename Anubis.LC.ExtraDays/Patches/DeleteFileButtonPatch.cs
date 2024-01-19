@@ -13,8 +13,14 @@ namespace Anubis.LC.ExtraDays.Patches
         [HarmonyPrefix]
         public static void DeleteFile()
         {
-            SaveGameHelper.DeleteSettings();
-            LethalConfigHelper.GetConfigForSaveFile().Value = true;
+            if (LethalConfigHelper.GetConfigForSaveFile().TryGetValue("correlatedPrice", out var correlatedPrice))
+            {
+                correlatedPrice.Value = (bool)correlatedPrice.DefaultValue;
+            }
+            if (LethalConfigHelper.GetConfigForSaveFile().TryGetValue("buyingRate", out var buyingRate))
+            {
+                buyingRate.Value = (bool)buyingRate.DefaultValue;
+            }
         }
     }
 }

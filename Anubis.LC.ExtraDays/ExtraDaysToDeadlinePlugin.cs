@@ -11,22 +11,28 @@ namespace Anubis.LC.ExtraDays
     [BepInDependency("ainavt.lc.lethalconfig")]
     public class ExtraDaysToDeadlinePlugin : BaseUnityPlugin
     {
-        private const string modGUID = ExtraDaysToDeadlineStaticHelper.modGUID;
-        private const string modName = ExtraDaysToDeadlineStaticHelper.modName;
-        private const string modVersion = ExtraDaysToDeadlineStaticHelper.modVersion;
+        private const string modGUID = ModStaticHelper.modGUID;
+        private const string modName = ModStaticHelper.modName;
+        private const string modVersion = ModStaticHelper.modVersion;
 
         private Harmony m_Harmony = new Harmony(modGUID);
 
         private TerminalModRegistry m_Registry;
 
+        public static ExtraDaysToDeadlinePlugin Instance;
+
         private void Awake()
         {
-            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"{modGUID} is loading...");
+            if(Instance == null)
+            {
+                Instance = this;
+            }
+            ModStaticHelper.Logger.LogInfo($"{modGUID} is loading...");
 
-            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Installing patches");
+            ModStaticHelper.Logger.LogInfo($"Installing patches");
             m_Harmony.PatchAll(typeof(ExtraDaysToDeadlinePlugin).Assembly);
 
-            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Registering built-in Commands");
+            ModStaticHelper.Logger.LogInfo($"Registering built-in Commands");
 
             // Create registry for the Terminals API
             m_Registry = TerminalRegistry.CreateTerminalRegistry();
@@ -38,7 +44,7 @@ namespace Anubis.LC.ExtraDays
 
             DontDestroyOnLoad(this);
 
-            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Plugin {modGUID} is loaded!");
+            ModStaticHelper.Logger.LogInfo($"Plugin {modGUID} is loaded!");
         }
     }
 }
