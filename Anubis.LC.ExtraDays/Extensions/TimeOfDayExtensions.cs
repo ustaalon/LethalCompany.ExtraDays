@@ -58,6 +58,8 @@ namespace Anubis.LC.ExtraDays.Extensions
         {
             if (isShipReset
                 || !ModStaticHelper.IsThisModInstalled("Haha.DynamicDeadline")
+                || !ModStaticHelper.IsThisModInstalled("BrutalCompany")
+                || !ModStaticHelper.IsThisModInstalled("BrutalCompanyPlus")
                 || !ModStaticHelper.IsThisModInstalled("LethalOrg.ProgressiveDeadline"))
             {
                 timeOfDay.timeUntilDeadline = timeOfDay.totalTime * ModStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS;
