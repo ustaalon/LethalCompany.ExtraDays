@@ -28,20 +28,17 @@ Please let me know about any bugs, issues or requests regarding my mod by openin
 Please consider support by [this link](https://ko-fi.com/ustaalon). It will help me to continue and focus on mods and open-source.
 
 # Release Notes
+### 2.1.3
+- Added suppoort for Brutal Company and Brutal Company Plus
+- Added option for reduce buying rate if buying an extra day (option in Lethal Config menu)
+- Added support for more than 3 save files (Working with better saves)
+- Minor refactoring issues
+
 ### 2.1.2
 - LethalAPI_Terminal fixed an [issue](https://github.com/LethalCompany/LethalAPI.Terminal/issues/30) from their end
 
 ### 2.1.1
 - LethalConfig fixed an [issue](https://github.com/AinaVT/LethalConfig/issues/19) from their end
-
-### 2.1.0
-- Added support for [LethalConfig](https://thunderstore.io/c/lethal-company/p/AinaVT/LethalConfig/)
-- Added support for [LethalAPI.Terminal](https://thunderstore.io/c/lethal-company/p/LethalAPI/LethalAPI_Terminal/)
-- Added support for [ProgressiveDeadline](https://thunderstore.io/c/lethal-company/p/LethalOrg/ProgressiveDeadline/)
-- Added config menu to give the host the option for each save file to choose if he prefers correlated price or constant value price (350 credits) for each extra day
-
-### 2.0.6
-- Fixed version in DLL file, required new version bump
 
 [All changelogs can be found here](https://github.com/ustaalon/LethalCompany.ExtraDays/blob/rc/CHANGELOG.md)
 

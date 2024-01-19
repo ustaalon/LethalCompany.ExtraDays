@@ -1,3 +1,9 @@
+### 2.1.3
+- Added suppoort for Brutal Company and Brutal Company Plus
+- Added option for reduce buying rate if buying an extra day (option in Lethal Config menu)
+- Added support for more than 3 save files (Working with better saves)
+- Minor refactoring issues
+
 ### 2.1.2
 - LethalAPI_Terminal fixed an [issue](https://github.com/LethalCompany/LethalAPI.Terminal/issues/30) from their end
 
