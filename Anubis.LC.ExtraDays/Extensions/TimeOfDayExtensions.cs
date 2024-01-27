@@ -56,11 +56,16 @@ namespace Anubis.LC.ExtraDays.Extensions
 
         public static void ResetDeadline(this TimeOfDay timeOfDay, bool isShipReset = false)
         {
-            if (isShipReset
+            if (isShipReset && ModStaticHelper.IsThisModInstalled("LethalExpansion"))
+            {
+                timeOfDay.timeUntilDeadline = timeOfDay.totalTime * TimeOfDay.Instance.quotaVariables.deadlineDaysAmount;
+            }
+            else if (isShipReset
                 || !ModStaticHelper.IsThisModInstalled("Haha.DynamicDeadline")
                 || !ModStaticHelper.IsThisModInstalled("BrutalCompany")
                 || !ModStaticHelper.IsThisModInstalled("BrutalCompanyPlus")
-                || !ModStaticHelper.IsThisModInstalled("LethalOrg.ProgressiveDeadline"))
+                || !ModStaticHelper.IsThisModInstalled("LethalOrg.ProgressiveDeadline")
+                || !ModStaticHelper.IsThisModInstalled("LethalExpansion"))
             {
                 timeOfDay.timeUntilDeadline = timeOfDay.totalTime * ModStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS;
 
@@ -108,7 +113,14 @@ namespace Anubis.LC.ExtraDays.Extensions
 
             var deadlineDaysAmount = !tryGetFromDisk ? timeOfDay.CalculateDeadlineDaysAmount() : timeOfDay.GetDeadlineDaysAmountFromDisk();
 
-            timeOfDay.quotaVariables.deadlineDaysAmount = deadlineDaysAmount;
+            if (!ModStaticHelper.IsThisModInstalled("LethalExpansion"))
+            {
+                timeOfDay.quotaVariables.deadlineDaysAmount = deadlineDaysAmount;
+            }
+            else
+            {
+                deadlineDaysAmount = timeOfDay.quotaVariables.deadlineDaysAmount;
+            }
 
             string currentSaveFile = GameNetworkManager.Instance.currentSaveFileName;
 
