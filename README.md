@@ -1,7 +1,7 @@
 # Extra Days
 Allows the player to purchase an extra day via the terminal. This mod's uniqueness is that it tries to be more realistic with the game, as it is not trying to modify the main logic of the deadline. It tries to add functionality that will give you extends for the deadline but with some price on it. You can buy as many days as you want if you have enough credits. Every cycle (all days passed), the game deadline will reset to defaults - 3 days.
 
-## How To Use? (only host can do it)
+## How To Use? (all players can do it)
 1. Enter the ship's terminal
 2. Go to the `Other` category
 3. Execute the `buyday` menu item
@@ -22,26 +22,21 @@ So by using my mod, it will fix those issues for both of them.
 ## LethalConfig Menu
 ![image](https://github.com/ustaalon/LethalCompany.ExtraDays/assets/19238320/14cdfa7f-d326-42e4-874c-9f2516268a29)
 
-## Bugs, Issues & requests
+## Bugs, Issues & Requests
 Please let me know about any bugs, issues or requests regarding my mod by opening an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues), by leaving a comment in [this Discord channel](https://discord.com/channels/1168655651455639582/1190842600534573056) or by sending me an email at ustaalon@gmail.com
 
 Please consider support by [this link](https://ko-fi.com/ustaalon). It will help me to continue and focus on mods and open-source.
 
 # Release Notes
-### 2.1.2
-- LethalAPI_Terminal fixed an [issue](https://github.com/LethalCompany/LethalAPI.Terminal/issues/30) from their end
+### 2.2.0
+- Fixed compatibility issues [with Lethal Expansion](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/34)
+- [Added option](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/35) to configure price for an extra day (from 250 to 1700 credits) - host only
 
-### 2.1.1
-- LethalConfig fixed an [issue](https://github.com/AinaVT/LethalConfig/issues/19) from their end
-
-### 2.1.0
-- Added support for [LethalConfig](https://thunderstore.io/c/lethal-company/p/AinaVT/LethalConfig/)
-- Added support for [LethalAPI.Terminal](https://thunderstore.io/c/lethal-company/p/LethalAPI/LethalAPI_Terminal/)
-- Added support for [ProgressiveDeadline](https://thunderstore.io/c/lethal-company/p/LethalOrg/ProgressiveDeadline/)
-- Added config menu to give the host the option for each save file to choose if he prefers correlated price or constant value price (350 credits) for each extra day
-
-### 2.0.6
-- Fixed version in DLL file, required new version bump
+### 2.1.3
+- Added support for Brutal Company and Brutal Company Plus
+- Added option for reducing buying rate if buying an extra day (option in Lethal Config menu)
+- Added support for more than 3 save files (Working with better saves)
+- Minor refactoring issues
 
 [All changelogs can be found here](https://github.com/ustaalon/LethalCompany.ExtraDays/blob/rc/CHANGELOG.md)
 

@@ -1,4 +1,5 @@
 ﻿using Anubis.LC.ExtraDays.Helpers;
+using BepInEx.Configuration;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,14 @@ namespace Anubis.LC.ExtraDays.Patches
         [HarmonyPrefix]
         public static void DeleteFile()
         {
-            SaveGameHelper.DeleteSettings();
-            LethalConfigHelper.GetConfigForSaveFile().Value = true;
+            if (LethalConfigHelper.GetConfigForSaveFile().TryGetValue("correlatedPrice", out var correlatedPrice))
+            {
+                ((ConfigEntry<bool>)correlatedPrice).Value = (bool)correlatedPrice.DefaultValue;
+            }
+            if (LethalConfigHelper.GetConfigForSaveFile().TryGetValue("buyingRate", out var buyingRate))
+            {
+                ((ConfigEntry<bool>)buyingRate).Value = (bool)buyingRate.DefaultValue;
+            }
         }
     }
 }

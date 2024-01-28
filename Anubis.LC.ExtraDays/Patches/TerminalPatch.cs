@@ -15,7 +15,7 @@ internal static class TerminalPatch
     {
         if (StartOfRound.Instance.companyBuyingRate <= 0f)
         {
-            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Company buying rate is lower than zero, recalculating...");
+            ModStaticHelper.Logger.LogInfo("Company buying rate is lower than zero, recalculating...");
             TimeOfDay.Instance.ReCalculateBuyingRateForCompany();
         } else
         {

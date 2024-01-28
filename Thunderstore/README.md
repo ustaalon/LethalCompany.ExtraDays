@@ -1,7 +1,9 @@
 # Extra Days
 Allows the player to purchase an extra day via the terminal. This mod's uniqueness is that it tries to be more realistic with the game, as it is not trying to modify the main logic of the deadline. It tries to add functionality that will give you extends for the deadline but with some price on it. You can buy as many days as you want if you have enough credits. Every cycle (all days passed), the game deadline will reset to defaults - 3 days.
 
-## How To Use? (only host can do it)
+Note that, due the "reset to default", it will might have issues with other mods that deals with deadline increment. If you facing any issues please let [me know](https://github.com/ustaalon/LethalCompany.ExtraDays/issues).
+
+## How To Use? (all players can do it)
 1. Enter the ship's terminal
 2. Go to the `Other` category
 3. Execute the `buyday` menu item
@@ -22,7 +24,7 @@ So by using my mod, it will fix those issues for both of them.
 ## LethalConfig Menu
 ![image](https://github.com/ustaalon/LethalCompany.ExtraDays/assets/19238320/14cdfa7f-d326-42e4-874c-9f2516268a29)
 
-## Bugs, Issues & requests
+## Bugs, Issues & Requests
 Please let me know about any bugs, issues or requests regarding my mod by opening an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues), by leaving a comment in [this Discord channel](https://discord.com/channels/1168655651455639582/1190842600534573056) or by sending me an email at ustaalon@gmail.com
 
 Please consider support by [this link](https://ko-fi.com/ustaalon). It will help me to continue and focus on mods and open-source.

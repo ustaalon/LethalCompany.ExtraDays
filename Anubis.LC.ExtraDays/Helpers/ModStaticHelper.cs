@@ -3,11 +3,11 @@ using BepInEx.Logging;
 
 namespace Anubis.LC.ExtraDays.Helpers
 {
-    public class ExtraDaysToDeadlineStaticHelper
+    public class ModStaticHelper
     {
         public const string modGUID = "ExtraDaysToDeadline";
         public const string modName = "ExtraDaysToDeadline";
-        public const string modVersion = "2.1.2";
+        public const string modVersion = "2.2.0";
 
         public static ManualLogSource Logger = BepInEx.Logging.Logger.CreateLogSource(modGUID);
 

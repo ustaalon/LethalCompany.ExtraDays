@@ -5,6 +5,7 @@ using LethalAPI.LibTerminal.Interfaces;
 using LethalAPI.LibTerminal.Interactions;
 using Anubis.LC.ExtraDays.Helpers;
 using Anubis.LC.ExtraDays.Extensions;
+using Anubis.LC.ExtraDays.ModNetwork;
 
 namespace Anubis.LC.ExtraDays.Commands
 {
@@ -17,7 +18,7 @@ namespace Anubis.LC.ExtraDays.Commands
         [TerminalCommand("deny", clearText: false)]
         public string DenyBuyExtraDays()
         {
-            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Player denied so the deadline didn't change!");
+            ModStaticHelper.Logger.LogInfo("Player denied so the deadline didn't change!");
             var builder = new StringBuilder();
             builder.AppendLine();
             builder.AppendLine("Cancelled order.");
@@ -30,21 +31,10 @@ namespace Anubis.LC.ExtraDays.Commands
         public string ConfirmBuyExtraDays(Terminal terminal)
         {
             var builder = new StringBuilder();
-            if (!RoundManager.Instance.NetworkManager.IsHost)
-            {
-                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Player is not the host. Deadline won't be change.");
-                builder.AppendLine();
-                builder.AppendLine("Only the ship's captain can ask for an extra day.");
-                builder.AppendLine();
-                builder.AppendLine();
-                builder.AppendLine("Cancelled order.");
-                builder.AppendLine();
-                return builder.ToString();
-            }
 
             if (!terminal.IsExtraDaysPurchasable())
             {
-                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Player has insufficient credits to purchase an extra day");
+                ModStaticHelper.Logger.LogInfo("Player has insufficient credits to purchase an extra day");
                 builder.AppendLine();
                 builder.AppendLine("You don't have enough credits to buy an extra day.");
                 builder.AppendLine();
@@ -53,7 +43,14 @@ namespace Anubis.LC.ExtraDays.Commands
                 return builder.ToString();
             }
 
-            terminal.SetDaysToDeadline();
+            if (!RoundManager.Instance.NetworkManager.IsHost)
+            {
+                Networking.Instance.BuyExtraDayServerRpc();
+            }
+            else
+            {
+                terminal.SetDaysToDeadline();
+            }
             builder.AppendLine();
             builder.AppendLine("An extra day has been added to your deadline. Don't waste it!");
             builder.AppendLine();
@@ -64,18 +61,6 @@ namespace Anubis.LC.ExtraDays.Commands
         public ITerminalInteraction BuyDaysCommand()
         {
             var builder = new StringBuilder();
-            if (!RoundManager.Instance.NetworkManager.IsHost)
-            {
-                builder.AppendLine("Only the ship's captain can ask for an extra day.");
-                builder.AppendLine();
-                builder.AppendLine();
-                builder.AppendLine("Cancelled order.");
-                builder.AppendLine();
-                return new TerminalInteraction()
-                    .WithPrompt(builder.ToString());
-            }
-
-            TimeOfDay.Instance.SetExtraDaysPrice();
 
             var terminalNode = new TerminalNode()
             {

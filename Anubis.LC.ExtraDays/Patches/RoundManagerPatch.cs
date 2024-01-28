@@ -14,11 +14,11 @@ namespace Anubis.LC.ExtraDays.Patches
         [HarmonyPrefix]
         public static void Prefix_PlotOutEnemiesForNextHour()
         {
-            if (TimeOfDay.Instance.daysUntilDeadline > ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS)
+            if (TimeOfDay.Instance.daysUntilDeadline > ModStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS)
             {
-                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Adjusting enemies in higer deadline - Start");
+                ModStaticHelper.Logger.LogInfo("Adjusting enemies in higer deadline - Start");
                 PreviousDaysUntilDeadline = TimeOfDay.Instance.daysUntilDeadline;
-                TimeOfDay.Instance.daysUntilDeadline = TimeOfDay.Instance.daysUntilDeadline % ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS;
+                TimeOfDay.Instance.daysUntilDeadline = TimeOfDay.Instance.daysUntilDeadline % ModStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS;
                 DaysUntilDeadlineModuluRan = true;
             }
         }
@@ -32,7 +32,7 @@ namespace Anubis.LC.ExtraDays.Patches
             {
                 TimeOfDay.Instance.daysUntilDeadline = PreviousDaysUntilDeadline;
                 DaysUntilDeadlineModuluRan = false;
-                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Adjusting enemies in higer deadline - End");
+                ModStaticHelper.Logger.LogInfo("Adjusting enemies in higer deadline - End");
             }
         }
     }

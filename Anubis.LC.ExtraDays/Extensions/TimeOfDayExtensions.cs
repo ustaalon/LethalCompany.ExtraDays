@@ -1,5 +1,6 @@
 ﻿using Anubis.LC.ExtraDays.Helpers;
-using Anubis.LC.ExtraDays.Models;
+using Anubis.LC.ExtraDays.ModNetwork;
+using BepInEx.Configuration;
 using UnityEngine;
 
 namespace Anubis.LC.ExtraDays.Extensions
@@ -14,7 +15,7 @@ namespace Anubis.LC.ExtraDays.Extensions
             timeOfDay.ReCalculateBuyingRateForCompany();
             timeOfDay.SyncTimeAndDeadline();
 
-            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Added {ExtraDaysToDeadlineStaticHelper.DAYS_TO_INCREASE} day to deadline.");
+            ModStaticHelper.Logger.LogInfo($"Added {ModStaticHelper.DAYS_TO_INCREASE} day to deadline.");
         }
 
         public static int CalculateDeadlineDaysAmount(this TimeOfDay timeOfDay)
@@ -22,9 +23,9 @@ namespace Anubis.LC.ExtraDays.Extensions
             int days = (int)Mathf.Floor(timeOfDay.timeUntilDeadline / timeOfDay.totalTime);
 
             // if amount of days is below the default, keep it as default amount of days
-            if (days <= ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS)
+            if (days <= ModStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS)
             {
-                return ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS;
+                return ModStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS;
             }
 
             return days;
@@ -32,7 +33,7 @@ namespace Anubis.LC.ExtraDays.Extensions
 
         public static void SetExtraDaysPrice(this TimeOfDay timeOfDay)
         {
-            if (LethalConfigHelper.GetConfigForSaveFile().Value)
+            if (LethalConfigHelper.GetConfigForSaveFile().TryGetValue("correlatedPrice", out var correlatedPrice) && ((ConfigEntry<bool>)correlatedPrice).Value)
             {
                 int profitQuota = timeOfDay.profitQuota;
                 float baseIncrease = 0.15f * profitQuota;
@@ -46,24 +47,40 @@ namespace Anubis.LC.ExtraDays.Extensions
             }
             else
             {
-                extraDayPrice = ExtraDaysToDeadlineStaticHelper.CONSTANT_PRICE;
+                if (LethalConfigHelper.GetConfigForSaveFile().TryGetValue("extraDayPrice", out var _extraDayPrice))
+                {
+                    extraDayPrice = ((ConfigEntry<int>)_extraDayPrice).Value;
+                }
+                else
+                {
+                    extraDayPrice = ModStaticHelper.CONSTANT_PRICE;
+                }
             }
         }
 
         public static int GetExtraDaysPrice(this TimeOfDay timeOfDay)
         {
-            return extraDayPrice;
+            return Networking.Instance.extraDaysPrice == 0 ? extraDayPrice : Networking.Instance.extraDaysPrice;
         }
 
         public static void ResetDeadline(this TimeOfDay timeOfDay, bool isShipReset = false)
         {
-            if (isShipReset
-                || !ExtraDaysToDeadlineStaticHelper.IsThisModInstalled("Haha.DynamicDeadline")
-                || !ExtraDaysToDeadlineStaticHelper.IsThisModInstalled("LethalOrg.ProgressiveDeadline"))
+            if (isShipReset && ModStaticHelper.IsThisModInstalled("LethalExpansion"))
             {
-                timeOfDay.timeUntilDeadline = timeOfDay.totalTime * ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS;
+                timeOfDay.timeUntilDeadline = timeOfDay.totalTime * TimeOfDay.Instance.quotaVariables.deadlineDaysAmount;
 
-                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Deadline reset to defaults");
+                ModStaticHelper.Logger.LogInfo("Deadline reset to defaults (Compatibility for Lethal Expansion)");
+            }
+            else if (isShipReset
+                || !ModStaticHelper.IsThisModInstalled("Haha.DynamicDeadline")
+                || !ModStaticHelper.IsThisModInstalled("BrutalCompany")
+                || !ModStaticHelper.IsThisModInstalled("BrutalCompanyPlus")
+                || !ModStaticHelper.IsThisModInstalled("LethalOrg.ProgressiveDeadline")
+                || !ModStaticHelper.IsThisModInstalled("LethalExpansion"))
+            {
+                timeOfDay.timeUntilDeadline = timeOfDay.totalTime * ModStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS;
+
+                ModStaticHelper.Logger.LogInfo("Deadline reset to defaults");
             }
 
             timeOfDay.ReCalculateBuyingRateForCompany();
@@ -74,8 +91,31 @@ namespace Anubis.LC.ExtraDays.Extensions
         {
             timeOfDay.SetDeadlineDaysAmount(tryGetFromDisk);
             timeOfDay.SetBuyingRateForDay();
+            timeOfDay.SetReduceBuyingRate();
             StartOfRound.Instance.SyncCompanyBuyingRateServerRpc();
-            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Buying rate recalculated");
+            ModStaticHelper.Logger.LogInfo("Buying rate recalculated");
+        }
+
+        public static void SetReduceBuyingRate(this TimeOfDay timeOfDay)
+        {
+            if (LethalConfigHelper.GetConfigForSaveFile().TryGetValue("buyingRate", out var buyingRate) && ((ConfigEntry<bool>)buyingRate).Value)
+            {
+                ModStaticHelper.Logger.LogInfo("Reduced buying rate is ON");
+                var reduceAmount = 0.01f * timeOfDay.quotaVariables.deadlineDaysAmount;
+                var currentRate = StartOfRound.Instance.companyBuyingRate;
+                var nextAmount = StartOfRound.Instance.companyBuyingRate - reduceAmount;
+
+                ModStaticHelper.Logger.LogInfo($"Current rate: {currentRate}, Next rate: {nextAmount}");
+                if (currentRate >= 0.9f && nextAmount > 0.7f)
+                {
+                    ModStaticHelper.Logger.LogInfo($"Buying rate set to: {nextAmount}");
+                    StartOfRound.Instance.companyBuyingRate = nextAmount;
+                }
+                else
+                {
+                    ModStaticHelper.Logger.LogInfo($"Buying rate did not change due to chance of very low rate");
+                }
+            }
         }
 
         public static void SetDeadlineDaysAmount(this TimeOfDay timeOfDay, bool tryGetFromDisk = false)
@@ -84,13 +124,20 @@ namespace Anubis.LC.ExtraDays.Extensions
 
             var deadlineDaysAmount = !tryGetFromDisk ? timeOfDay.CalculateDeadlineDaysAmount() : timeOfDay.GetDeadlineDaysAmountFromDisk();
 
-            timeOfDay.quotaVariables.deadlineDaysAmount = deadlineDaysAmount;
+            if (!ModStaticHelper.IsThisModInstalled("LethalExpansion"))
+            {
+                timeOfDay.quotaVariables.deadlineDaysAmount = deadlineDaysAmount;
+            }
+            else
+            {
+                deadlineDaysAmount = timeOfDay.quotaVariables.deadlineDaysAmount;
+            }
 
             string currentSaveFile = GameNetworkManager.Instance.currentSaveFileName;
 
-            ES3.Save<int>(ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, deadlineDaysAmount, currentSaveFile);
+            ES3.Save<int>(ModStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, deadlineDaysAmount, currentSaveFile);
 
-            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Deadline days amount: {deadlineDaysAmount} (To calculate buying rate)");
+            ModStaticHelper.Logger.LogInfo($"Deadline days amount: {deadlineDaysAmount} (To calculate buying rate)");
         }
 
         public static int GetDeadlineDaysAmountFromDisk(this TimeOfDay timeOfDay)
@@ -98,22 +145,16 @@ namespace Anubis.LC.ExtraDays.Extensions
             string currentSaveFile = GameNetworkManager.Instance.currentSaveFileName;
             int deadlineDaysAmount;
 
-            if (SaveGameHelper.IsSaveFileExists())
+            if (!ES3.KeyExists(ModStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, currentSaveFile))
             {
-                ES3.Save<int>(ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, SaveGameHelper.ReadSettings().DeadlineDaysAmount, currentSaveFile);
-                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"(Compatibility) Saved old .json save file into game save file");
-                SaveGameHelper.DeleteSettings();
+                ES3.Save<int>(ModStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, timeOfDay.CalculateDeadlineDaysAmount(), currentSaveFile);
+                deadlineDaysAmount = ES3.Load<int>(ModStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, currentSaveFile);
+                ModStaticHelper.Logger.LogInfo($"Saved deadlineDaysAmount to disk and then loaded, deadlineDaysAmount: {deadlineDaysAmount}");
             }
-
-            if (!ES3.KeyExists(ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, currentSaveFile))
+            else
             {
-                ES3.Save<int>(ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, timeOfDay.CalculateDeadlineDaysAmount(), currentSaveFile);
-                deadlineDaysAmount = ES3.Load<int>(ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, currentSaveFile);
-                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Saved deadlineDaysAmount to disk and then loaded, deadlineDaysAmount: {deadlineDaysAmount}");
-            } else
-            {
-                deadlineDaysAmount = ES3.Load<int>(ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, currentSaveFile);
-                ExtraDaysToDeadlineStaticHelper.Logger.LogInfo($"Loaded deadlineDaysAmount from disk, deadlineDaysAmount: {deadlineDaysAmount}");
+                deadlineDaysAmount = ES3.Load<int>(ModStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, currentSaveFile);
+                ModStaticHelper.Logger.LogInfo($"Loaded deadlineDaysAmount from disk, deadlineDaysAmount: {deadlineDaysAmount}");
             }
 
             return deadlineDaysAmount;
@@ -124,7 +165,7 @@ namespace Anubis.LC.ExtraDays.Extensions
             timeOfDay.UpdateProfitQuotaCurrentTime();
             timeOfDay.SyncTimeClientRpc(timeOfDay.globalTime, (int)timeOfDay.timeUntilDeadline);
 
-            ExtraDaysToDeadlineStaticHelper.Logger.LogInfo("Deadline sync");
+            ModStaticHelper.Logger.LogInfo("Deadline sync");
         }
     }
 }

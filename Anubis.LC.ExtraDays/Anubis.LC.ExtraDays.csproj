@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <AssemblyName>ExtraDaysToDeadline</AssemblyName>
     <Description>Allows the player to purchase an extra day via the terminal. This mod's uniqueness is that It tries to add functionality that will give you the option to extend the deadline but with some price on it.</Description>
-    <Version>2.1.2</Version>
+    <Version>2.2.0</Version>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <LangVersion>latest</LangVersion>
     <Authors>Anubis</Authors>
@@ -17,6 +17,7 @@
     <PackageReference Include="BepInEx.Core" Version="5.*" />
     <PackageReference Include="BepInEx.PluginInfoProps" Version="1.*" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="NicholaScott.BepInEx.RuntimeNetcodeRPCValidator" Version="0.2.5" />
     <PackageReference Include="UnityEngine.Modules" Version="2022.3.9" IncludeAssets="compile" />
   </ItemGroup>
   

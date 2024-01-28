@@ -14,7 +14,15 @@ namespace Anubis.LC.ExtraDays.Patches
         public static void ResetSavedValues()
         {
             string currentSaveFile = GameNetworkManager.Instance.currentSaveFileName;
-            ES3.Save<int>(ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, ExtraDaysToDeadlineStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS, currentSaveFile);
+            if(!ModStaticHelper.IsThisModInstalled("LethalExpansion"))
+            {
+                ModStaticHelper.Logger.LogInfo($"Reset deadline days amount for save file {currentSaveFile}");
+                ES3.Save<int>(ModStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, ModStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS, currentSaveFile);
+            } else
+            {
+                ModStaticHelper.Logger.LogInfo($"Reset deadline days amount for save file {currentSaveFile}, using LethalExpansion");
+                ES3.Save<int>(ModStaticHelper.DEFAULT_AMOUNT_OF_DEADLINE_DAYS_SAVE_KEY, TimeOfDay.Instance.quotaVariables.deadlineDaysAmount, currentSaveFile);
+            }
         }
     }
 

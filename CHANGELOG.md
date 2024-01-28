@@ -1,3 +1,13 @@
+### 2.2.0
+- Fixed compatibility issues [with Lethal Expansion](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/34)
+- [Added option](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/35) to configure price for an extra day (from 250 to 1700 credits) - host only
+
+### 2.1.3
+- Added suppoort for Brutal Company and Brutal Company Plus
+- Added option for reduce buying rate if buying an extra day (option in Lethal Config menu)
+- Added support for more than 3 save files (Working with better saves)
+- Minor refactoring issues
+
 ### 2.1.2
 - LethalAPI_Terminal fixed an [issue](https://github.com/LethalCompany/LethalAPI.Terminal/issues/30). Needed to bump version
 
