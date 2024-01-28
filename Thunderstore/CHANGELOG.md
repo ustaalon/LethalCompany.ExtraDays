@@ -1,3 +1,7 @@
+### 2.2.0
+- Fixed compatibility issues [with Lethal Expansion](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/34)
+- [Added option](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/35) to configure price for an extra day (from 250 to 1700 credits) - host only
+
 ### 2.1.3
 - Added support for Brutal Company and Brutal Company Plus
 - Added option for reducing buying rate if buying an extra day (option in Lethal Config menu)

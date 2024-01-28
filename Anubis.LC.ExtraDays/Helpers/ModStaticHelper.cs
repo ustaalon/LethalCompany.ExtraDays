@@ -7,7 +7,7 @@ namespace Anubis.LC.ExtraDays.Helpers
     {
         public const string modGUID = "ExtraDaysToDeadline";
         public const string modName = "ExtraDaysToDeadline";
-        public const string modVersion = "2.1.3";
+        public const string modVersion = "2.2.0";
 
         public static ManualLogSource Logger = BepInEx.Logging.Logger.CreateLogSource(modGUID);
 

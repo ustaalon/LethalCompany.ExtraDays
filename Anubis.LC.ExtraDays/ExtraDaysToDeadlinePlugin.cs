@@ -4,10 +4,13 @@ using LethalAPI.LibTerminal.Models;
 using Anubis.LC.ExtraDays.Commands;
 using Anubis.LC.ExtraDays.Helpers;
 using LethalAPI.LibTerminal;
+using RuntimeNetcodeRPCValidator;
+using Anubis.LC.ExtraDays.ModNetwork;
 
 namespace Anubis.LC.ExtraDays
 {
     [BepInPlugin(modGUID, modName, modVersion)]
+    [BepInDependency(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_VERSION)]
     [BepInDependency("ainavt.lc.lethalconfig")]
     public class ExtraDaysToDeadlinePlugin : BaseUnityPlugin
     {
@@ -21,12 +24,20 @@ namespace Anubis.LC.ExtraDays
 
         public static ExtraDaysToDeadlinePlugin Instance;
 
+        private NetcodeValidator netcodeValidator;
+
         private void Awake()
         {
             if(Instance == null)
             {
                 Instance = this;
             }
+
+            netcodeValidator = new NetcodeValidator(ModStaticHelper.modGUID);
+            netcodeValidator.PatchAll();
+
+            netcodeValidator.BindToPreExistingObjectByBehaviour<Networking, Terminal>();
+
             ModStaticHelper.Logger.LogInfo($"{modGUID} is loading...");
 
             ModStaticHelper.Logger.LogInfo($"Installing patches");

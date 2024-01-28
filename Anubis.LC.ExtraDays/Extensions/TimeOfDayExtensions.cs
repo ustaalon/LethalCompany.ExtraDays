@@ -1,4 +1,6 @@
 ﻿using Anubis.LC.ExtraDays.Helpers;
+using Anubis.LC.ExtraDays.ModNetwork;
+using BepInEx.Configuration;
 using UnityEngine;
 
 namespace Anubis.LC.ExtraDays.Extensions
@@ -31,7 +33,7 @@ namespace Anubis.LC.ExtraDays.Extensions
 
         public static void SetExtraDaysPrice(this TimeOfDay timeOfDay)
         {
-            if (LethalConfigHelper.GetConfigForSaveFile().TryGetValue("correlatedPrice", out var correlatedPrice) && correlatedPrice.Value)
+            if (LethalConfigHelper.GetConfigForSaveFile().TryGetValue("correlatedPrice", out var correlatedPrice) && ((ConfigEntry<bool>)correlatedPrice).Value)
             {
                 int profitQuota = timeOfDay.profitQuota;
                 float baseIncrease = 0.15f * profitQuota;
@@ -45,13 +47,20 @@ namespace Anubis.LC.ExtraDays.Extensions
             }
             else
             {
-                extraDayPrice = ModStaticHelper.CONSTANT_PRICE;
+                if (LethalConfigHelper.GetConfigForSaveFile().TryGetValue("extraDayPrice", out var _extraDayPrice))
+                {
+                    extraDayPrice = ((ConfigEntry<int>)_extraDayPrice).Value;
+                }
+                else
+                {
+                    extraDayPrice = ModStaticHelper.CONSTANT_PRICE;
+                }
             }
         }
 
         public static int GetExtraDaysPrice(this TimeOfDay timeOfDay)
         {
-            return extraDayPrice;
+            return Networking.Instance.extraDaysPrice == 0 ? extraDayPrice : Networking.Instance.extraDaysPrice;
         }
 
         public static void ResetDeadline(this TimeOfDay timeOfDay, bool isShipReset = false)
@@ -59,6 +68,8 @@ namespace Anubis.LC.ExtraDays.Extensions
             if (isShipReset && ModStaticHelper.IsThisModInstalled("LethalExpansion"))
             {
                 timeOfDay.timeUntilDeadline = timeOfDay.totalTime * TimeOfDay.Instance.quotaVariables.deadlineDaysAmount;
+
+                ModStaticHelper.Logger.LogInfo("Deadline reset to defaults (Compatibility for Lethal Expansion)");
             }
             else if (isShipReset
                 || !ModStaticHelper.IsThisModInstalled("Haha.DynamicDeadline")
@@ -87,7 +98,7 @@ namespace Anubis.LC.ExtraDays.Extensions
 
         public static void SetReduceBuyingRate(this TimeOfDay timeOfDay)
         {
-            if (LethalConfigHelper.GetConfigForSaveFile().TryGetValue("buyingRate", out var buyingRate) && buyingRate.Value)
+            if (LethalConfigHelper.GetConfigForSaveFile().TryGetValue("buyingRate", out var buyingRate) && ((ConfigEntry<bool>)buyingRate).Value)
             {
                 ModStaticHelper.Logger.LogInfo("Reduced buying rate is ON");
                 var reduceAmount = 0.01f * timeOfDay.quotaVariables.deadlineDaysAmount;

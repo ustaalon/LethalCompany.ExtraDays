@@ -1,4 +1,5 @@
 ﻿using Anubis.LC.ExtraDays.Helpers;
+using BepInEx.Configuration;
 using HarmonyLib;
 using System;
 using System.Collections.Generic;
@@ -15,11 +16,11 @@ namespace Anubis.LC.ExtraDays.Patches
         {
             if (LethalConfigHelper.GetConfigForSaveFile().TryGetValue("correlatedPrice", out var correlatedPrice))
             {
-                correlatedPrice.Value = (bool)correlatedPrice.DefaultValue;
+                ((ConfigEntry<bool>)correlatedPrice).Value = (bool)correlatedPrice.DefaultValue;
             }
             if (LethalConfigHelper.GetConfigForSaveFile().TryGetValue("buyingRate", out var buyingRate))
             {
-                buyingRate.Value = (bool)buyingRate.DefaultValue;
+                ((ConfigEntry<bool>)buyingRate).Value = (bool)buyingRate.DefaultValue;
             }
         }
     }

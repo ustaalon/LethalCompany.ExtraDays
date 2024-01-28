@@ -1,7 +1,7 @@
 # Extra Days
 Allows the player to purchase an extra day via the terminal. This mod's uniqueness is that it tries to be more realistic with the game, as it is not trying to modify the main logic of the deadline. It tries to add functionality that will give you extends for the deadline but with some price on it. You can buy as many days as you want if you have enough credits. Every cycle (all days passed), the game deadline will reset to defaults - 3 days.
 
-## How To Use? (only host can do it)
+## How To Use? (all players can do it)
 1. Enter the ship's terminal
 2. Go to the `Other` category
 3. Execute the `buyday` menu item
