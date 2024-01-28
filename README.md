@@ -22,7 +22,7 @@ So by using my mod, it will fix those issues for both of them.
 ## LethalConfig Menu
 ![image](https://github.com/ustaalon/LethalCompany.ExtraDays/assets/19238320/14cdfa7f-d326-42e4-874c-9f2516268a29)
 
-## Bugs, Issues & requests
+## Bugs, Issues & Requests
 Please let me know about any bugs, issues or requests regarding my mod by opening an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues), by leaving a comment in [this Discord channel](https://discord.com/channels/1168655651455639582/1190842600534573056) or by sending me an email at ustaalon@gmail.com
 
 Please consider support by [this link](https://ko-fi.com/ustaalon). It will help me to continue and focus on mods and open-source.
