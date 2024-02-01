@@ -28,8 +28,8 @@ namespace Anubis.LC.ExtraDays.ModNetwork
         {
             ModStaticHelper.Logger.LogInfo($"Setup extra day price for player, {_extraDaysPrice}");
             extraDaysPrice = _extraDaysPrice;
+            TimeOfDay.Instance.SyncTimeAndDeadline();
         }
-
 
         [ServerRpc(RequireOwnership = false)]
         public void BuyExtraDayServerRpc()
@@ -50,6 +50,18 @@ namespace Anubis.LC.ExtraDays.ModNetwork
             terminal.SetDaysToDeadline();
         }
 
+        [ServerRpc(RequireOwnership = false)]
+        public void SyncTimeServerRpc()
+        {
+            SyncTimeClientRpc();
+        }
+
+        [ClientRpc]
+        public void SyncTimeClientRpc()
+        {
+            TimeOfDay.Instance.SyncTimeAndDeadline();
+        }
+
         private void Awake()
         {
             if (Instance == null)
@@ -65,6 +77,7 @@ namespace Anubis.LC.ExtraDays.ModNetwork
             // We need to wait because sending an RPC before a NetworkObject is spawned results in errors.
             yield return new WaitUntil(() => NetworkObject.IsSpawned);
             SetExtraDaysPriceServerRpc(null);
+            SyncTimeServerRpc();
         }
     }
 }

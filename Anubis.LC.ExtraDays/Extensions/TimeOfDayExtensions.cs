@@ -13,7 +13,7 @@ namespace Anubis.LC.ExtraDays.Extensions
         {
             timeOfDay.timeUntilDeadline += timeOfDay.totalTime * days;
             timeOfDay.ReCalculateBuyingRateForCompany();
-            timeOfDay.SyncTimeAndDeadline();
+            Networking.Instance.SyncTimeServerRpc();
 
             ModStaticHelper.Logger.LogInfo($"Added {ModStaticHelper.DAYS_TO_INCREASE} day to deadline.");
         }
@@ -162,8 +162,8 @@ namespace Anubis.LC.ExtraDays.Extensions
 
         public static void SyncTimeAndDeadline(this TimeOfDay timeOfDay)
         {
-            timeOfDay.UpdateProfitQuotaCurrentTime();
             timeOfDay.SyncTimeClientRpc(timeOfDay.globalTime, (int)timeOfDay.timeUntilDeadline);
+            timeOfDay.UpdateProfitQuotaCurrentTime();
 
             ModStaticHelper.Logger.LogInfo("Deadline sync");
         }

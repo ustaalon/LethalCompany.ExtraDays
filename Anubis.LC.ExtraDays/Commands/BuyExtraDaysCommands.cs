@@ -43,14 +43,7 @@ namespace Anubis.LC.ExtraDays.Commands
                 return builder.ToString();
             }
 
-            if (!RoundManager.Instance.NetworkManager.IsHost)
-            {
-                Networking.Instance.BuyExtraDayServerRpc();
-            }
-            else
-            {
-                terminal.SetDaysToDeadline();
-            }
+            Networking.Instance.BuyExtraDayServerRpc();
             builder.AppendLine();
             builder.AppendLine("An extra day has been added to your deadline. Don't waste it!");
             builder.AppendLine();
