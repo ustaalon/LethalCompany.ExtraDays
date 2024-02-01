@@ -1,6 +1,10 @@
+### 2.2.1
+- Fixed an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/36) when day goes down when landing the ship (view only)
+
 ### 2.2.0
 - Fixed compatibility issues [with Lethal Expansion](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/34)
 - [Added option](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/35) to configure price for an extra day (from 250 to 1700 credits) - host only
+- Now all players can purchase a day
 
 ### 2.1.3
 - Added support for Brutal Company and Brutal Company Plus

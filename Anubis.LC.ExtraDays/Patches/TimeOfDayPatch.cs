@@ -21,12 +21,5 @@ namespace Anubis.LC.ExtraDays.Patches
         {
             __instance.ReCalculateBuyingRateForCompany(true);
         }
-
-        [HarmonyPatch("SyncTimeClientRpc")]
-        [HarmonyPostfix]
-        public static void SyncTimeClientRpc(TimeOfDay __instance)
-        {
-            __instance.UpdateProfitQuotaCurrentTime();
-        }
     }
 }
