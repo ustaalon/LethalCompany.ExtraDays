@@ -1,3 +1,6 @@
+### 2.2.2
+- Fixed issue when the host mark/unmark configuration for correlated price it did not update for all players
+
 ### 2.2.1
 - Fixed an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/36) when day goes down when landing the ship (view only)
 
