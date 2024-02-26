@@ -16,8 +16,9 @@ namespace Anubis.LC.ExtraDays.Commands
     {
         [RequireInterface(typeof(ConfirmInteraction))]
         [TerminalCommand("deny", clearText: false)]
-        public string DenyBuyExtraDays()
+        public string DenyBuyExtraDays(Terminal terminal)
         {
+            terminal.terminalAudio.PlayOneShot(terminal.syncedAudios[1]);
             ModStaticHelper.Logger.LogInfo("Player denied so the deadline didn't change!");
             var builder = new StringBuilder();
             builder.AppendLine();
@@ -34,6 +35,7 @@ namespace Anubis.LC.ExtraDays.Commands
 
             if (!terminal.IsExtraDaysPurchasable())
             {
+                terminal.terminalAudio.PlayOneShot(terminal.syncedAudios[1]);
                 ModStaticHelper.Logger.LogInfo("Player has insufficient credits to purchase an extra day");
                 builder.AppendLine();
                 builder.AppendLine("You don't have enough credits to buy an extra day.");
@@ -43,9 +45,12 @@ namespace Anubis.LC.ExtraDays.Commands
                 return builder.ToString();
             }
 
+            terminal.terminalAudio.PlayOneShot(terminal.syncedAudios[0]);
             Networking.Instance.BuyExtraDayServerRpc();
             builder.AppendLine();
             builder.AppendLine("An extra day has been added to your deadline. Don't waste it!");
+            builder.AppendLine();
+            builder.AppendLine($"({TimeOfDay.Instance.daysUntilDeadline} day(s) remaining)");
             builder.AppendLine();
             return builder.ToString();
         }
@@ -57,7 +62,7 @@ namespace Anubis.LC.ExtraDays.Commands
 
             var terminalNode = new TerminalNode()
             {
-                displayText = string.Format("You're about to ask the Company for ONE extra day to reach the profit quota. It will cost you {0} credits.", TimeOfDay.Instance.GetExtraDaysPrice()),
+                displayText = string.Format("You're about to ask the Company for ONE extra day to reach the profit quota. It will cost you {0} credits ({1} day(s) remaining).", TimeOfDay.Instance.GetExtraDaysPrice(), TimeOfDay.Instance.daysUntilDeadline),
                 clearPreviousText = true,
                 name = "buyday"
             };

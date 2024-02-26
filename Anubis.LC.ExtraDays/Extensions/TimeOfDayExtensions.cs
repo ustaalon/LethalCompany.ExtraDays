@@ -33,7 +33,7 @@ namespace Anubis.LC.ExtraDays.Extensions
 
         public static void SetExtraDaysPrice(this TimeOfDay timeOfDay)
         {
-            if (LethalConfigHelper.GetConfigForSaveFile().TryGetValue("correlatedPrice", out var correlatedPrice) && ((ConfigEntry<bool>)correlatedPrice).Value)
+            if (Networking.Instance.isCorrelatedPrice)
             {
                 int profitQuota = timeOfDay.profitQuota;
                 float baseIncrease = 0.15f * profitQuota;
@@ -60,7 +60,7 @@ namespace Anubis.LC.ExtraDays.Extensions
 
         public static int GetExtraDaysPrice(this TimeOfDay timeOfDay)
         {
-            return Networking.Instance.extraDaysPrice == 0 ? extraDayPrice : Networking.Instance.extraDaysPrice;
+            return Networking.Instance.isCorrelatedPrice ? extraDayPrice : Networking.Instance.extraDaysPrice;
         }
 
         public static void ResetDeadline(this TimeOfDay timeOfDay, bool isShipReset = false)
@@ -98,7 +98,7 @@ namespace Anubis.LC.ExtraDays.Extensions
 
         public static void SetReduceBuyingRate(this TimeOfDay timeOfDay)
         {
-            if (LethalConfigHelper.GetConfigForSaveFile().TryGetValue("buyingRate", out var buyingRate) && ((ConfigEntry<bool>)buyingRate).Value)
+            if (Networking.Instance.isReduceBuyingRate)
             {
                 ModStaticHelper.Logger.LogInfo("Reduced buying rate is ON");
                 var reduceAmount = 0.01f * timeOfDay.quotaVariables.deadlineDaysAmount;

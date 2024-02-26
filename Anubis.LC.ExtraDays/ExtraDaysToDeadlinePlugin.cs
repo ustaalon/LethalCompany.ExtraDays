@@ -11,7 +11,7 @@ namespace Anubis.LC.ExtraDays
 {
     [BepInPlugin(modGUID, modName, modVersion)]
     [BepInDependency(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_VERSION)]
-    [BepInDependency("ainavt.lc.lethalconfig")]
+    [BepInDependency("ainavt.lc.lethalconfig", BepInDependency.DependencyFlags.SoftDependency)]
     public class ExtraDaysToDeadlinePlugin : BaseUnityPlugin
     {
         private const string modGUID = ModStaticHelper.modGUID;

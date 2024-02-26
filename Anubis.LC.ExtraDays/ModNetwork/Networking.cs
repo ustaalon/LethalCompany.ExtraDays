@@ -1,5 +1,6 @@
 ﻿using Anubis.LC.ExtraDays.Extensions;
 using Anubis.LC.ExtraDays.Helpers;
+using BepInEx.Configuration;
 using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
@@ -12,6 +13,42 @@ namespace Anubis.LC.ExtraDays.ModNetwork
         public static Networking Instance;
 
         public int extraDaysPrice = 0;
+        public bool isCorrelatedPrice = false;
+        public bool isReduceBuyingRate = false;
+
+        [ServerRpc(RequireOwnership = false)]
+        public void SetReduceBuyingRateServerRpc(bool _isReduce)
+        {
+            if (!IsHost) return;
+            ModStaticHelper.Logger.LogInfo($"Setup correlated price for everyone {_isReduce}");
+            SetReduceBuyingRateClientRpc(_isReduce);
+        }
+
+        [ClientRpc]
+        public void SetReduceBuyingRateClientRpc(bool _isReduce)
+        {
+            ModStaticHelper.Logger.LogInfo($"Setup extra day price for player, {_isReduce}");
+            isReduceBuyingRate = _isReduce;
+        }
+
+        [ServerRpc(RequireOwnership = false)]
+        public void SetCorrelatedPriceServerRpc(bool _isCorrelated)
+        {
+            if (!IsHost) return;
+            ModStaticHelper.Logger.LogInfo($"Setup correlated price for everyone {_isCorrelated}");
+            SetCorrelatedPriceClientRpc(_isCorrelated);
+            if(_isCorrelated)
+            {
+                SetExtraDaysPriceServerRpc(null);
+            }
+        }
+
+        [ClientRpc]
+        public void SetCorrelatedPriceClientRpc(bool _isCorrelated)
+        {
+            ModStaticHelper.Logger.LogInfo($"Setup extra day price for player, {_isCorrelated}");
+            isCorrelatedPrice = _isCorrelated;
+        }
 
         [ServerRpc(RequireOwnership = false)]
         public void SetExtraDaysPriceServerRpc(int? _extraDaysPrice)
@@ -76,8 +113,19 @@ namespace Anubis.LC.ExtraDays.ModNetwork
         {
             // We need to wait because sending an RPC before a NetworkObject is spawned results in errors.
             yield return new WaitUntil(() => NetworkObject.IsSpawned);
-            SetExtraDaysPriceServerRpc(null);
-            SyncTimeServerRpc();
+            if (LethalConfigHelper.GetConfigForSaveFile().TryGetValue("correlatedPrice", out var correlatedPrice))
+            {
+                SetCorrelatedPriceServerRpc(((ConfigEntry<bool>)correlatedPrice).Value);
+            }
+            if (LethalConfigHelper.GetConfigForSaveFile().TryGetValue("buyingRate", out var _isReduceBuyingRate))
+            {
+                SetReduceBuyingRateServerRpc(((ConfigEntry<bool>)_isReduceBuyingRate).Value);
+            }
+            if (LethalConfigHelper.GetConfigForSaveFile().TryGetValue("extraDayPrice", out var _extraDayPrice))
+            {
+                SetExtraDaysPriceServerRpc(((ConfigEntry<int>)_extraDayPrice).Value);
+                SyncTimeServerRpc();
+            }
         }
     }
 }

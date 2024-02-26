@@ -39,6 +39,13 @@ namespace Anubis.LC.ExtraDays.Helpers
                         var currentIndex = i++;
                         var configurationForSaveFile = new Dictionary<string, ConfigEntryBase>();
                         var correlatedPrice = config.Bind($"Save File {currentIndex}", "Use price correlated calculation?", true, "This determines if the price to buy an extra day will be constant value (350 credits) or correlated to the quota (dynamic)");
+                        correlatedPrice.SettingChanged += (obj, args) =>
+                        {
+                            if (Networking.Instance && RoundManager.Instance.NetworkManager.IsHost)
+                            {
+                                Networking.Instance.SetCorrelatedPriceServerRpc(correlatedPrice.Value);
+                            }
+                        };
                         var buyingRate = config.Bind($"Save File {currentIndex}", "Use reduce buying rate?", false, "This determines if the buying rate will reduce a bit after buying an extra day");
                         var extraDayPrice = config.Bind($"Save File {currentIndex}", "Setup extra day price", ModStaticHelper.CONSTANT_PRICE, "This configure the price of an extra day only if `correlated calculation` field is OFF");
                         extraDayPrice.SettingChanged += (obj, args) =>
@@ -70,6 +77,13 @@ namespace Anubis.LC.ExtraDays.Helpers
                     var currentIndex = i + 1;
                     var configurationForSaveFile = new Dictionary<string, ConfigEntryBase>();
                     var correlatedPrice = config.Bind($"Save File {currentIndex}", "Use price correlated calculation?", true, "This determines if the price to buy an extra day will be constant value (350 credits) or correlated to the quota (dynamic)");
+                    correlatedPrice.SettingChanged += (obj, args) =>
+                    {
+                        if (Networking.Instance && RoundManager.Instance.NetworkManager.IsHost)
+                        {
+                            Networking.Instance.SetCorrelatedPriceServerRpc(correlatedPrice.Value);
+                        }
+                    };
                     var buyingRate = config.Bind($"Save File {currentIndex}", "Use reduce buying rate?", false, "This determines if the buying rate will reduce a bit after buying an extra day");
                     var extraDayPrice = config.Bind($"Save File {currentIndex}", "Setup extra day price", ModStaticHelper.CONSTANT_PRICE, "This configure the price of an extra day only if `correlated calculation` field is OFF");
                     extraDayPrice.SettingChanged += (obj, args) =>
@@ -106,6 +120,13 @@ namespace Anubis.LC.ExtraDays.Helpers
                 ModStaticHelper.Logger.LogError("Could not find save file. Using defaults configuration for save files");
                 var configurationForSaveFile = new Dictionary<string, ConfigEntryBase>();
                 var correlatedPrice = ExtraDaysToDeadlinePlugin.Instance.Config.Bind($"Save File 1", "Use price correlated calculation?", true, "This determines if the price to buy an extra day will be constant value (350 credits) or correlated to the quota (dynamic)");
+                correlatedPrice.SettingChanged += (obj, args) =>
+                {
+                    if (Networking.Instance && RoundManager.Instance.NetworkManager.IsHost)
+                    {
+                        Networking.Instance.SetCorrelatedPriceServerRpc(correlatedPrice.Value);
+                    }
+                };
                 var buyingRate = ExtraDaysToDeadlinePlugin.Instance.Config.Bind($"Save File 1", "Use reduce buying rate?", false, "This determines if the buying rate will reduce a bit after buying an extra day");
                 var extraDayPrice = ExtraDaysToDeadlinePlugin.Instance.Config.Bind($"Save File 1", "Setup extra day price", ModStaticHelper.CONSTANT_PRICE, "This configure the price of an extra day only if `correlated calculation` field is OFF");
                 LethalConfigManager.AddConfigItem(new BoolCheckBoxConfigItem(correlatedPrice, false));
