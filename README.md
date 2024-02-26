@@ -30,6 +30,7 @@ Please consider support by [this link](https://ko-fi.com/ustaalon). It will help
 # Release Notes
 ### 2.2.2
 - Fixed issue when the host mark/unmark configuration for correlated price it did not update for all players
+- [Added text](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/37) describing how many days remaining before and after buying an extra day
 
 ### 2.2.1
 - Fixed an [issue](https://github.com/ustaalon/LethalCompany.ExtraDays/issues/36) when day goes down when landing the ship (view only)
